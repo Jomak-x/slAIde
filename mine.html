@@ -1,17 +1,20 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>The Secret of the Seaside Cats - Mystical Presentation</title>
+<title>Futuristic Space Presentation</title>
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Lato:wght@300;400&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto:wght@300;400;700&display=swap');
 
   body {
     margin: 0;
-    font-family: 'Lato', sans-serif;
-    color: #e0e0e0;
-    overflow: hidden; /* Prevent scrolling since we'll use navigation */
-    background: linear-gradient(135deg, #1a0f2e 0%, #0a0517 100%);
-    background-size: cover;
+    font-family: 'Roboto', sans-serif;
+    background: linear-gradient(135deg, #1a1a2e, #162a3f); /* Deep dark blue/purple gradient */
+    color: #e0e0e0; /* Off-white text */
+    overflow: hidden; /* Prevent scrolling as we're using navigation */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
   }
 
   .slideshow-container {
@@ -21,115 +24,120 @@
     justify-content: center;
     align-items: center;
     position: relative;
-    padding: 20px;
     box-sizing: border-box;
   }
 
   .slide {
-    background-color: rgba(26, 15, 46, 0.7); /* Slightly transparent dark mystical background */
-    border: 1px solid rgba(138, 43, 226, 0.3); /* Subtle purple border */
-    border-radius: 15px;
-    box-shadow: 0 0 30px rgba(138, 43, 226, 0.4), 0 0 15px rgba(0, 255, 255, 0.2); /* Mystical glow */
-    padding: 50px 70px; /* Generous padding */
+    background-color: rgba(25, 25, 40, 0.9); /* Slightly transparent dark background */
+    border: 2px solid #00ffff; /* Electric cyan border */
+    border-radius: 12px;
+    box-shadow: 0 0 25px rgba(0, 255, 255, 0.5), /* Glowing effect */
+                0 0 10px rgba(0, 255, 255, 0.2);
+    padding: 60px;
     width: 85%;
-    max-width: 900px;
-    min-height: 400px;
-    display: none; /* Initially hide all slides */
+    max-width: 960px;
+    min-height: 500px;
+    display: none; /* Hidden by default */
     box-sizing: border-box;
-    position: relative;
-    overflow: hidden;
-    transition: transform 0.6s ease-out, opacity 0.6s ease-out; /* Smooth transition for slide changes */
+    position: absolute; /* Stack slides on top of each other */
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
     opacity: 0;
-    transform: scale(0.95);
+    transition: opacity 0.6s ease-in-out;
   }
 
-  /* Make the active slide visible and animated */
   .slide.active {
     display: block;
     opacity: 1;
-    transform: scale(1);
   }
 
-  /* Mystical theme specifics */
-  .mystical h1 {
-    font-family: 'Cinzel', serif;
-    color: #ccacfa; /* Soft purple glow */
-    text-shadow: 0 0 10px rgba(138, 43, 226, 0.7);
-    margin-bottom: 30px;
-    font-size: 2.8em;
-    letter-spacing: 1px;
+  .slide h1 {
+    font-family: 'Orbitron', sans-serif;
+    color: #00ffff; /* Electric cyan for headings */
     text-align: center;
+    margin-bottom: 40px;
+    font-size: 2.8em;
+    text-shadow: 0 0 15px rgba(0, 255, 255, 0.7), 0 0 8px rgba(0, 255, 255, 0.3); /* Heading glow */
+    line-height: 1.2;
   }
 
-  .mystical ul {
-    list-style: none; /* Remove default bullet */
-    padding-left: 0;
+  .slide ul {
+    list-style: none; /* Remove default bullet points */
+    padding: 0;
     margin-top: 30px;
   }
 
-  .mystical li {
-    font-size: 1.3em;
-    line-height: 1.6;
-    margin-bottom: 15px;
-    padding-left: 30px;
+  .slide li {
+    font-size: 1.4em;
+    line-height: 1.8;
+    margin-bottom: 18px;
     position: relative;
-    color: #d1b4e0; /* Lighter mystical text */
+    padding-left: 35px; /* Space for custom bullet */
+    color: #a0ffff; /* Lighter cyan for list items */
   }
 
-  .mystical li::before {
-    content: '✦'; /* Mystical bullet point */
-    color: #8a2be2; /* Amethyst color */
-    font-size: 1.2em;
+  .slide li::before {
+    content: '▶'; /* Custom bullet point */
+    color: #00ffff; /* Electric cyan */
     position: absolute;
     left: 0;
-    top: 0;
+    font-size: 0.8em;
+    top: 50%;
+    transform: translateY(-50%);
+    text-shadow: 0 0 8px rgba(0, 255, 255, 0.5);
   }
 
-  /* --- Navigation Arrow Styling --- */
+  /* Navigation arrows */
   .nav-arrow {
     position: absolute;
-    bottom: 50px;
+    bottom: 5%; /* Position from bottom */
+    font-family: 'Orbitron', sans-serif;
     font-size: 3em;
+    color: #00ffff;
     cursor: pointer;
-    color: #8a2be2; /* Amethyst color for arrows */
     user-select: none;
-    transition: color 0.3s ease, transform 0.3s ease;
-    text-shadow: 0 0 10px rgba(138, 43, 226, 0.5);
+    padding: 15px 25px;
+    background-color: rgba(0, 255, 255, 0.1);
+    border: 1px solid #00ffff;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    box-shadow: 0 0 15px rgba(0, 255, 255, 0.4);
     z-index: 100;
   }
 
   .nav-arrow:hover {
-    color: #ccacfa; /* Lighter on hover */
-    transform: scale(1.1);
-  }
-
-  #nextButton {
-    right: 50px;
+    color: #e0e0e0;
+    background-color: rgba(0, 255, 255, 0.3);
+    box-shadow: 0 0 25px rgba(0, 255, 255, 0.7);
+    transform: scale(1.05);
   }
 
   #prevButton {
-    left: 50px;
+    left: 5%;
+  }
+
+  #nextButton {
+    right: 5%;
   }
 
   .nav-arrow.hidden {
     opacity: 0;
-    pointer-events: none; /* Disable interaction when hidden */
-    transform: scale(0.8);
+    pointer-events: none;
   }
 </style>
 </head>
-<body class="mystical">
+<body>
 
   <div class="slideshow-container">
-    <div class="slide"><h1>The Secret of the Seaside Cats</h1><ul><li>In a quiet seaside town, three felines shared an extraordinary secret.</li><li>Their nightly rendezvous held the key to an ancient, unspoken pact.</li></ul></div>
-    <div class="slide"><h1>Luna, Jasper, and Misty: Guardians of a Mystery</h1><ul><li>Luna, the sleek black cat, bore the small brass key of destiny.</li><li>Jasper, the striped tom, brought offerings from the depths.</li><li>Misty, the tiny white kitten, brought the purest spirit of discovery.</li></ul></div>
-    <div class="slide"><h1>The Nightly Ritual at the Lighthouse</h1><ul><li>As the town slept, the lighthouse became a beacon for their sacred meeting.</li><li>Beneath its guiding light, their clandestine journey began anew each night.</li></ul></div>
-    <div class="slide"><h1>The Hidden Lock and Descending Stairs</h1><ul><li>A concealed lock, whispered into existence, guarded the threshold to another realm.</li><li>Spiral stairs, echoing with arcane whispers, led them into the earth's embrace.</li></ul></div>
-    <div class="slide"><h1>A Cavern Filled with Living Stars</h1><ul><li>Below, a breathtaking grotto shimmered with aquatic constellations.</li><li>Tiny, luminous fish danced through the air, mirroring the celestial vault above.</li></ul></div>
-    <div class="slide"><h1>Silent Wonder: Part of the Night Sky's Secret</h1><ul><li>The cats, spellbound, became silent observers of this ethereal ballet.</li><li>Their fur glowed, absorbing the mystical light, intertwining with the cosmic tapestry.</li></ul></div>
-    <div class="slide"><h1>The Enduring Gaze: Reflections of Glowing Fish</h1><ul><li>Upon returning, their eyes held the memory of the starlit depths.</li><li>A subtle, shimmering reflection revealed the enduring magic within their gaze.</li></ul></div>
+    <div class="slide"><h1>Unveiling the Cosmos: Our Next Frontier</h1><ul><li>Humanity's innate drive to transcend terrestrial bounds and comprehend the universe.</li><li>Space exploration as the ultimate journey of discovery, fueled by advanced technology.</li><li>Redefining our place within the vast, intricate tapestry of the cosmos.</li></ul></div>
+    <div class="slide"><h1>Echoes of a New Era: Sputnik's Genesis</h1><ul><li>1957: The launch of Sputnik 1, a beacon from a nascent Space Age.</li><li>This artificial satellite initiated an unprecedented cosmic contest among nations.</li><li>A paradigm shift, demonstrating humanity's newfound ability to reach Earth's orbit.</li></ul></div>
+    <div class="slide"><h1>The Great Leap: From Earth Orbit to Lunar Footprints</h1><ul><li>The intense Space Race propelled rapid-fire innovations and daring missions.</li><li>Historic firsts, from Yuri Gagarin's orbital flight to humanity's initial steps on the Moon.</li><li>Defining moments that forever reshaped our perception of possibility and achievement.</li></ul></div>
+    <div class="slide"><h1>Nexus of Nations: The ISS and Beyond</h1><ul><li>The evolution from competitive endeavors to a unified orbital outpost.</li><li>The International Space Station (ISS): A living blueprint for interstellar collaboration.</li><li>Pioneering long-duration human presence and shared scientific pursuit in microgravity.</li></ul></div>
+    <div class="slide"><h1>Charting New Worlds: The Interplanetary Odyssey</h1><ul><li>NASA's Artemis program aims to re-establish a sustainable human presence on the Moon.</li><li>Mars emerges as the next critical destination for future human colonization and scientific study.</li><li>Advanced robotic probes and telescopes like JWST are unlocking secrets of exoplanets and the primordial universe.</li></ul></div>
+    <div class="slide"><h1>Legacy of the Stars: Shaping Our Future</h1><ul><li>Space exploration consistently inspires generations and fuels technological breakthroughs.</li><li>Fostering a profound global perspective and promoting collective human endeavor.</li><li>The cosmic imperative: Our ongoing journey into the stars is fundamental to human progress.</li></ul></div>
 
-    <div id="prevButton" class="nav-arrow hidden">◄</div>
+    <div id="prevButton" class="nav-arrow">◄</div>
     <div id="nextButton" class="nav-arrow">▶</div>
   </div>
 
@@ -141,14 +149,12 @@
 
   function showSlide(n) {
     slides.forEach((slide, index) => {
+      slide.classList.remove('active');
       if (index === n) {
         slide.classList.add('active');
-      } else {
-        slide.classList.remove('active');
       }
     });
 
-    // Update button visibility
     if (n === 0) {
       prevButton.classList.add('hidden');
     } else {
@@ -179,15 +185,7 @@
   nextButton.addEventListener('click', nextSlide);
   prevButton.addEventListener('click', prevSlide);
 
-  // Keyboard navigation
-  document.addEventListener('keydown', function(event) {
-    if (event.key === 'ArrowRight') {
-      nextSlide();
-    } else if (event.key === 'ArrowLeft') {
-      prevSlide();
-    }
-  });
-
+  // Initialize the slideshow
   showSlide(slideIndex);
 </script>
 

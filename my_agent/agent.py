@@ -5,11 +5,12 @@ from google.genai import types
 from google.adk.runners import InMemoryRunner
 from google.adk.agents.invocation_context import InvocationContext
 from google.adk.tools.tool_context import ToolContext
-from typing import AsyncGenerator, Optional
+from typing import AsyncGenerator, Optional, List
 from google.adk.events import Event, EventActions
 from google.adk.agents.llm_agent import Agent
-from pydantic import BaseModel, Field
-# Part of agent.py --> Follow https://google.github.io/adk-docs/get-started/quickstart/ to learn the setup
+from pydantic import BaseModel, Field, RootModel
+from google.adk.tools import google_search
+
 
 # --- 1. Define Sub-Agents for Each Pipeline Stage ---
 
@@ -44,6 +45,12 @@ Output *only* the raw JSON object.
     description="Generates a JSON plan for a presentation including style and slide topics.",
     output_key="json_plan"
 )
+
+# Assuming your ADK provides a Google Search tool named 'google_search'.
+
+# Assuming your ADK provides a Google Search tool named 'google_search'.
+
+
 
 # STEP 2: The Content Writer
 # This agent takes the JSON plan, writes the markdown for ALL slides, and passes the style along.
