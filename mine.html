@@ -1,85 +1,195 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Whiskers' Last Nap</title>
+<title>The Secret of the Seaside Cats - Mystical Presentation</title>
 <style>
+  @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Lato:wght@300;400&display=swap');
+
   body {
-    font-family: 'Segoe UI', Candara, 'Bitstream Vera Sans', 'DejaVu Sans', Arial, sans-serif;
-    background-color: #FDF5E6; /* OldLace, a soft, warm background */
-    color: #333;
-    line-height: 1.6;
     margin: 0;
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 30px; /* Space between slides */
+    font-family: 'Lato', sans-serif;
+    color: #e0e0e0;
+    overflow: hidden; /* Prevent scrolling since we'll use navigation */
+    background: linear-gradient(135deg, #1a0f2e 0%, #0a0517 100%);
+    background-size: cover;
   }
 
-  .slide {
-    background-color: #FFFFFF;
-    border-radius: 20px; /* Softer, charming corners */
-    margin: 0; /* Gap handled by body flexbox */
-    padding: 40px;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.1); /* Gentle shadow */
-    max-width: 800px;
-    width: 100%;
+  .slideshow-container {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    padding: 20px;
     box-sizing: border-box;
   }
 
-  /* Charming specific styles */
-  .charming h1 {
-    font-family: 'Georgia', serif; /* Classic, inviting serif font */
-    color: #A0522D; /* Sienna, a warm brown */
-    font-size: 2.8em;
-    margin-bottom: 25px;
-    text-align: center;
+  .slide {
+    background-color: rgba(26, 15, 46, 0.7); /* Slightly transparent dark mystical background */
+    border: 1px solid rgba(138, 43, 226, 0.3); /* Subtle purple border */
+    border-radius: 15px;
+    box-shadow: 0 0 30px rgba(138, 43, 226, 0.4), 0 0 15px rgba(0, 255, 255, 0.2); /* Mystical glow */
+    padding: 50px 70px; /* Generous padding */
+    width: 85%;
+    max-width: 900px;
+    min-height: 400px;
+    display: none; /* Initially hide all slides */
+    box-sizing: border-box;
     position: relative;
-    padding-bottom: 15px;
+    overflow: hidden;
+    transition: transform 0.6s ease-out, opacity 0.6s ease-out; /* Smooth transition for slide changes */
+    opacity: 0;
+    transform: scale(0.95);
   }
 
-  .charming h1::after {
-    content: '';
-    position: absolute;
-    left: 50%;
-    bottom: 0;
-    transform: translateX(-50%);
-    width: 60px;
-    height: 3px;
-    background-color: #D2691E; /* Chocolate, a rich accent */
-    border-radius: 2px;
+  /* Make the active slide visible and animated */
+  .slide.active {
+    display: block;
+    opacity: 1;
+    transform: scale(1);
   }
 
-  .charming ul {
+  /* Mystical theme specifics */
+  .mystical h1 {
+    font-family: 'Cinzel', serif;
+    color: #ccacfa; /* Soft purple glow */
+    text-shadow: 0 0 10px rgba(138, 43, 226, 0.7);
+    margin-bottom: 30px;
+    font-size: 2.8em;
+    letter-spacing: 1px;
+    text-align: center;
+  }
+
+  .mystical ul {
     list-style: none; /* Remove default bullet */
     padding-left: 0;
-    margin-top: 25px;
+    margin-top: 30px;
   }
 
-  .charming li {
-    position: relative;
-    padding-left: 35px; /* Space for custom bullet */
+  .mystical li {
+    font-size: 1.3em;
+    line-height: 1.6;
     margin-bottom: 15px;
-    font-size: 1.15em;
-    color: #555;
+    padding-left: 30px;
+    position: relative;
+    color: #d1b4e0; /* Lighter mystical text */
   }
 
-  .charming li::before {
-    content: '🐾'; /* Paw print Unicode character for charm */
+  .mystical li::before {
+    content: '✦'; /* Mystical bullet point */
+    color: #8a2be2; /* Amethyst color */
+    font-size: 1.2em;
     position: absolute;
     left: 0;
     top: 0;
-    color: #D2691E; /* Chocolate, matching header line */
-    font-size: 1.3em;
-    line-height: 1.6; /* Align with text */
+  }
+
+  /* --- Navigation Arrow Styling --- */
+  .nav-arrow {
+    position: absolute;
+    bottom: 50px;
+    font-size: 3em;
+    cursor: pointer;
+    color: #8a2be2; /* Amethyst color for arrows */
+    user-select: none;
+    transition: color 0.3s ease, transform 0.3s ease;
+    text-shadow: 0 0 10px rgba(138, 43, 226, 0.5);
+    z-index: 100;
+  }
+
+  .nav-arrow:hover {
+    color: #ccacfa; /* Lighter on hover */
+    transform: scale(1.1);
+  }
+
+  #nextButton {
+    right: 50px;
+  }
+
+  #prevButton {
+    left: 50px;
+  }
+
+  .nav-arrow.hidden {
+    opacity: 0;
+    pointer-events: none; /* Disable interaction when hidden */
+    transform: scale(0.8);
   }
 </style>
 </head>
-<body class="charming">
-  <div class="slide"><h1>The Final Nap: Whiskers' Gentle Rest</h1><ul><li>Whiskers, weary from a life well-lived, curled up for her very last, peaceful nap.</li><li>Surrounded by love, she drifted into a gentle slumber, a quiet closing to her remarkable journey.</li><li>Her rest was serene, a tranquil moment reflecting years of warmth and happiness.</li></ul></div>
-  <div class="slide"><h1>A Dream of Comfort: Revisiting Early Memories</h1><ul><li>In her final dream, Whiskers revisited cherished moments, a tapestry of comfort and joy.</li><li>Her mind wandered back to the earliest days, filled with innocence and the promise of discovery.</li><li>A nostalgic journey through the memories that shaped her loving existence.</li></ul></div>
-  <div class="slide"><h1>Echoes of the Bakery: Warm Bread in Her Dreams</h1><ul><li>The comforting scent of warm, fresh bread, a memory from her very first home, filled her dream.</li><li>She re-experienced the gentle beginnings behind the bustling bakery, a place of warmth and security.</li><li>A sweet reminder of where her wonderful adventure truly began, enveloped in delicious aromas.</li></ul></div>
-  <div class="slide"><h1>The Soft Embrace: Remembering the Scarf</h1><ul><li>Whiskers recalled the gentle, soft embrace of the scarf that first brought her safety.</li><li>Emma's kindness, symbolized by that warm wrapping, was a pivotal moment in her life.</li><li>A memory of comfort and the beginning of a lifelong bond, cherished in her peaceful sleep.</li></ul></div>
-  <div class="slide"><h1>Emma and Home: The Last, Loving Dream</h1><ul><li>Her most cherished dream was of Emma, the loving girl who created her world.</li><li>Whiskers’ final moments were filled with the profound sense of belonging and home that Emma provided.</li><li>A beautiful, loving dream, encapsulating all the warmth, safety, and affection she had known.</li></ul></div>
+<body class="mystical">
+
+  <div class="slideshow-container">
+    <div class="slide"><h1>The Secret of the Seaside Cats</h1><ul><li>In a quiet seaside town, three felines shared an extraordinary secret.</li><li>Their nightly rendezvous held the key to an ancient, unspoken pact.</li></ul></div>
+    <div class="slide"><h1>Luna, Jasper, and Misty: Guardians of a Mystery</h1><ul><li>Luna, the sleek black cat, bore the small brass key of destiny.</li><li>Jasper, the striped tom, brought offerings from the depths.</li><li>Misty, the tiny white kitten, brought the purest spirit of discovery.</li></ul></div>
+    <div class="slide"><h1>The Nightly Ritual at the Lighthouse</h1><ul><li>As the town slept, the lighthouse became a beacon for their sacred meeting.</li><li>Beneath its guiding light, their clandestine journey began anew each night.</li></ul></div>
+    <div class="slide"><h1>The Hidden Lock and Descending Stairs</h1><ul><li>A concealed lock, whispered into existence, guarded the threshold to another realm.</li><li>Spiral stairs, echoing with arcane whispers, led them into the earth's embrace.</li></ul></div>
+    <div class="slide"><h1>A Cavern Filled with Living Stars</h1><ul><li>Below, a breathtaking grotto shimmered with aquatic constellations.</li><li>Tiny, luminous fish danced through the air, mirroring the celestial vault above.</li></ul></div>
+    <div class="slide"><h1>Silent Wonder: Part of the Night Sky's Secret</h1><ul><li>The cats, spellbound, became silent observers of this ethereal ballet.</li><li>Their fur glowed, absorbing the mystical light, intertwining with the cosmic tapestry.</li></ul></div>
+    <div class="slide"><h1>The Enduring Gaze: Reflections of Glowing Fish</h1><ul><li>Upon returning, their eyes held the memory of the starlit depths.</li><li>A subtle, shimmering reflection revealed the enduring magic within their gaze.</li></ul></div>
+
+    <div id="prevButton" class="nav-arrow hidden">◄</div>
+    <div id="nextButton" class="nav-arrow">▶</div>
+  </div>
+
+<script>
+  let slideIndex = 0;
+  const slides = document.querySelectorAll('.slide');
+  const prevButton = document.getElementById('prevButton');
+  const nextButton = document.getElementById('nextButton');
+
+  function showSlide(n) {
+    slides.forEach((slide, index) => {
+      if (index === n) {
+        slide.classList.add('active');
+      } else {
+        slide.classList.remove('active');
+      }
+    });
+
+    // Update button visibility
+    if (n === 0) {
+      prevButton.classList.add('hidden');
+    } else {
+      prevButton.classList.remove('hidden');
+    }
+
+    if (n === slides.length - 1) {
+      nextButton.classList.add('hidden');
+    } else {
+      nextButton.classList.remove('hidden');
+    }
+  }
+
+  function nextSlide() {
+    if (slideIndex < slides.length - 1) {
+      slideIndex++;
+      showSlide(slideIndex);
+    }
+  }
+
+  function prevSlide() {
+    if (slideIndex > 0) {
+      slideIndex--;
+      showSlide(slideIndex);
+    }
+  }
+
+  nextButton.addEventListener('click', nextSlide);
+  prevButton.addEventListener('click', prevSlide);
+
+  // Keyboard navigation
+  document.addEventListener('keydown', function(event) {
+    if (event.key === 'ArrowRight') {
+      nextSlide();
+    } else if (event.key === 'ArrowLeft') {
+      prevSlide();
+    }
+  });
+
+  showSlide(slideIndex);
+</script>
+
 </body>
 </html>

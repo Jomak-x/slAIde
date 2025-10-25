@@ -19,7 +19,7 @@ Slide_count_agent = LlmAgent(
     name="SlideTopicAndStyleGenerator",
     model="gemini-2.5-flash",
     instruction="""You are a presentation architect.
-Based on the user's request, generate a JSON object that outlines a presentation.
+You will recieve a story, presentation script, or lecture from the user. Based on the user's request, generate a JSON object that outlines a presentation.
 The JSON should have two keys:
 1. "style": A one-word description of the visual theme (e.g., "modern", "professional", "creative").
 2. "slides": A list of strings, where each string is the main topic or title for a single slide.
@@ -98,6 +98,7 @@ Your task is to create a SINGLE HTML document that contains ALL of the slides.
 - Each slide should be a `<div>` with the class "slide".
 - The final HTML should be a complete document, including `<html>`, `<head>`, and `<body>` tags.
 - The visual styling of the slides should reflect the provided theme.
+-The user should be able to toggle between slides by using a set of arrow buttons, which will switch the slide previous or next.
 
 **Input JSON:**
 {writer_output}
@@ -118,14 +119,141 @@ Example Output:
 <head>
 <title>Presentation</title>
 <style>
-  body {{ font-family: sans-serif; background-color: #f0f0f0; }}
-  .slide {{ background-color: white; border: 1px solid #ddd; margin: 20px; padding: 20px; border-radius: 5px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }}
-  .modern h1 {{ color: #0056b3; }}
+  body {
+    font-family: sans-serif;
+    background-color: #f0f0f0;
+    /* Prevent scrolling since we'll use navigation arrows */
+    overflow: hidden; 
+  }
+
+  .slideshow-container {
+    /* Full screen size for the container */
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative; /* Needed to position the arrows */
+  }
+
+  .slide {
+    background-color: white;
+    border: 1px solid #ddd;
+    padding: 40px; /* Increased padding */
+    border-radius: 8px; /* Slightly larger border-radius */
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15); /* Stronger shadow */
+    width: 80%; /* Fixed width for presentation feel */
+    max-width: 800px;
+    height: auto;
+    /* Initially hide all slides */
+    display: none; 
+    box-sizing: border-box;
+  }
+
+  /* Make the first slide visible */
+  .slide:first-of-type { 
+    display: block; 
+  }
+
+  .modern h1 {
+    color: #0056b3;
+  }
+
+  /* --- Navigation Arrow Styling --- */
+  .nav-arrow {
+    position: absolute;
+    bottom: 40px;
+    font-size: 2em; /* Large, clickable arrow */
+    cursor: pointer;
+    color: #0056b3;
+    user-select: none; /* Prevent text selection */
+    transition: color 0.2s;
+  }
+
+  .nav-arrow:hover {
+    color: #007bff;
+  }
+
+  /* Specific positions */
+  #nextButton {
+    right: 40px;
+  }
+
+  #prevButton {
+    left: 40px;
+  }
+
+  /* Hide the arrow when not needed */
+  .nav-arrow.hidden {
+    display: none;
+  }
 </style>
 </head>
 <body class="modern">
-  <div class="slide"><h1>Welcome</h1><ul><li>Point 1</li></ul></div>
-  <div class="slide"><h1>Conclusion</h1><ul><li>Point 2</li></ul></div>
+  
+  <div class="slideshow-container">
+    <div class="slide"><h1>Welcome</h1><ul><li>Point 1: This is the first slide.</li></ul></div>
+    <div class="slide"><h1>Middle Point</h1><ul><li>Point 2: Here is some more content.</li></ul></div>
+    <div class="slide"><h1>Conclusion</h1><ul><li>Point 3: This is the final slide.</li></ul></div>
+
+    <div id="prevButton" class="nav-arrow hidden">◄</div>
+    <div id="nextButton" class="nav-arrow">▶</div>
+  </div>
+
+<script>
+  let slideIndex = 0;
+  const slides = document.querySelectorAll('.slide');
+  const prevButton = document.getElementById('prevButton');
+  const nextButton = document.getElementById('nextButton');
+
+  // Function to show a specific slide
+  function showSlide(n) {
+    // Hide all slides
+    slides.forEach(slide => slide.style.display = 'none');
+    
+    // Show the target slide
+    slides[n].style.display = 'block';
+    
+    // Update button visibility
+    // Hide back button on the first slide
+    if (n === 0) {
+      prevButton.classList.add('hidden');
+    } else {
+      prevButton.classList.remove('hidden');
+    }
+
+    // Hide next button on the last slide
+    if (n === slides.length - 1) {
+      nextButton.classList.add('hidden');
+    } else {
+      nextButton.classList.remove('hidden');
+    }
+  }
+
+  // Function to move to the next slide
+  function nextSlide() {
+    if (slideIndex < slides.length - 1) {
+      slideIndex++;
+      showSlide(slideIndex);
+    }
+  }
+
+  // Function to move to the previous slide
+  function prevSlide() {
+    if (slideIndex > 0) {
+      slideIndex--;
+      showSlide(slideIndex);
+    }
+  }
+
+  // Set up the click handlers for both arrows
+  nextButton.addEventListener('click', nextSlide);
+  prevButton.addEventListener('click', prevSlide);
+
+  // Initialize the slideshow to the first slide
+  showSlide(slideIndex); 
+</script>
+
 </body>
 </html>
 ---
