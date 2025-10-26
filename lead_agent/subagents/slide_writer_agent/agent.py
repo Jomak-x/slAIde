@@ -8,6 +8,8 @@ Your task is to do two things:
 1. Extract the "style" value.
 2. Generate the markdown content for EVERY slide topic in the list. For each slide, include a title and about 5 bullet points.
 
+Keep bullet points brief and to the point.
+
 Your output must be a single JSON object with two keys:
 1. "style": The style extracted from the input.
 2. "all_slides_content": A JSON array of strings, where each string is the complete markdown for one slide. Please include 5
