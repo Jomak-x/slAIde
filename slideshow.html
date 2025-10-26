@@ -1,182 +1,240 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Pippin's Whimsical Adventures</title>
+<title>NASA: A Journey Through Space Exploration</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Indie+Flower&family=Nunito:wght@400;700&display=swap');
+  :root {
+    --primary-blue: #1a4365; /* Darker NASA-like blue */
+    --accent-blue: #3498db; /* Brighter accent blue */
+    --light-grey: #f5f7fa; /* Light background */
+    --dark-grey-text: #34495e;
+    --border-grey: #dbe2ed;
+    --white: #ffffff;
+  }
 
   body {
+    font-family: 'Inter', sans-serif;
+    background-color: var(--light-grey);
     margin: 0;
-    font-family: 'Nunito', sans-serif;
-    background: linear-gradient(135deg, #e0ffe0 0%, #d0e8d0 50%, #c0d8c0 100%); /* Soft, whimsical green gradient */
-    overflow: hidden; /* Hide scrollbars for full-screen slide display */
     display: flex;
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    color: #4A4A4A;
-  }
-
-  .slideshow-container {
-    width: 100vw;
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
     position: relative;
+    overflow: hidden;
+    color: var(--dark-grey-text);
   }
 
   .slide {
-    background-color: rgba(255, 255, 255, 0.95); /* Slightly transparent white */
-    border: 3px dashed #A8D8A8; /* Whimsical dashed border */
-    padding: 40px 60px;
-    border-radius: 25px; /* More rounded corners */
-    box-shadow: 0 10px 30px rgba(0,0,0,0.1); /* Softer, larger shadow */
-    width: 80%;
-    max-width: 800px;
-    height: auto;
-    min-height: 400px; /* Ensure a minimum height */
-    display: none; /* Hidden by default */
+    display: none;
+    background-color: var(--white);
+    border: 1px solid var(--border-grey);
+    margin: 20px;
+    padding: 60px 80px;
+    border-radius: 12px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+    max-width: 960px;
+    width: 85%;
+    min-height: 450px;
     box-sizing: border-box;
-    position: relative;
-    text-align: center; /* Center content for whimsical feel */
+    text-align: left;
+    transform: scale(0.98);
+    opacity: 0;
+    transition: transform 0.5s ease-in-out, opacity 0.5s ease-in-out;
   }
 
-  .slide:first-of-type {
-    display: block; /* Show the first slide initially */
+  .slide.active {
+    display: block;
+    transform: scale(1);
+    opacity: 1;
   }
 
-  /* Whimsical styling for headings */
-  .slide h1 {
-    font-family: 'Indie Flower', cursive;
-    color: #5A8D5A; /* Gentle green for titles */
-    font-size: 3.2em;
-    margin-bottom: 30px;
-    text-shadow: 1px 1px 2px rgba(0,0,0,0.05); /* Soft text shadow */
-    line-height: 1.2;
+  .professional h1 {
+    font-family: 'Inter', sans-serif;
+    color: var(--primary-blue);
+    text-align: center;
+    font-size: 2.8em;
+    margin-bottom: 40px;
+    font-weight: 700;
+    line-height: 1.3;
   }
 
-  /* Whimsical styling for lists */
-  .slide ul {
-    list-style: none; /* Remove default bullet points */
-    padding: 0;
-    margin-top: 20px;
-    text-align: left; /* Align list items to left */
-    max-width: 600px; /* Constrain width for better readability */
-    margin-left: auto;
-    margin-right: auto;
+  .professional ul {
+    list-style: none;
+    padding-left: 0;
+    margin-top: 30px;
   }
 
-  .slide ul li {
+  .professional li {
     font-size: 1.3em;
-    line-height: 1.6;
-    margin-bottom: 15px;
+    color: var(--dark-grey-text);
+    margin-bottom: 18px;
+    line-height: 1.7;
     position: relative;
-    padding-left: 30px; /* Space for custom bullet */
+    padding-left: 35px;
+    font-weight: 400;
   }
 
-  .slide ul li::before {
-    content: '🌿'; /* Whimsical bullet point */
+  .professional li::before {
+    content: '\2022'; /* Unicode bullet point */
     position: absolute;
     left: 0;
-    color: #8BC34A; /* A brighter green for bullets */
-    font-size: 1.1em;
-    top: 0;
+    color: var(--accent-blue);
+    font-size: 1.8em;
+    line-height: 0.8;
+    top: 50%;
+    transform: translateY(-50%);
+    font-weight: 600;
   }
 
-  .nav-arrow {
+  .arrow {
     position: absolute;
-    bottom: 50px; /* Position at the bottom */
-    background-color: rgba(255, 255, 255, 0.7);
-    border: 2px solid #8BC34A;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 2.2em;
+    background: var(--accent-blue);
+    color: var(--white);
+    border: none;
     border-radius: 50%;
     width: 60px;
     height: 60px;
+    cursor: pointer;
+    opacity: 0.7;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 2.5em;
-    cursor: pointer;
-    color: #5A8D5A;
-    user-select: none;
-    transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    z-index: 100;
+    outline: none; /* Remove focus outline */
   }
 
-  .nav-arrow:hover {
-    background-color: #8BC34A;
-    color: white;
-    transform: scale(1.1); /* Slight bounce on hover */
+  .arrow:hover {
+    opacity: 1;
+    background: var(--primary-blue);
+    transform: translateY(-50%) scale(1.05);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
   }
 
-  #nextButton {
-    right: 50px;
+  #prev { left: 40px; }
+  #next { right: 40px; }
+
+  /* Responsive adjustments */
+  @media (max-width: 1024px) {
+    .slide {
+      padding: 50px 60px;
+      width: 90%;
+    }
+    .professional h1 {
+      font-size: 2.4em;
+    }
+    .professional li {
+      font-size: 1.2em;
+    }
+    .arrow {
+      width: 50px;
+      height: 50px;
+      font-size: 1.8em;
+      left: 20px;
+      right: 20px;
+    }
   }
 
-  #prevButton {
-    left: 50px;
+  @media (max-width: 768px) {
+    .slide {
+      padding: 40px 40px;
+      min-height: 380px;
+    }
+    .professional h1 {
+      font-size: 2em;
+      margin-bottom: 30px;
+    }
+    .professional li {
+      font-size: 1.1em;
+      margin-bottom: 15px;
+      padding-left: 30px;
+    }
+    .professional li::before {
+      font-size: 1.6em;
+    }
+    .arrow {
+      width: 45px;
+      height: 45px;
+      font-size: 1.6em;
+      left: 10px;
+      right: 10px;
+    }
   }
 
-  .nav-arrow.hidden {
-    display: none;
+  @media (max-width: 480px) {
+    .slide {
+      padding: 30px 25px;
+      min-height: 300px;
+      margin: 10px;
+    }
+    .professional h1 {
+      font-size: 1.6em;
+      margin-bottom: 25px;
+    }
+    .professional li {
+      font-size: 1em;
+      margin-bottom: 12px;
+      padding-left: 25px;
+    }
+    .professional li::before {
+      font-size: 1.4em;
+    }
+    .arrow {
+      width: 40px;
+      height: 40px;
+      font-size: 1.4em;
+    }
+    #prev { left: 5px; }
+    #next { right: 5px; }
   }
 </style>
 </head>
-<body class="whimsical">
+<body class="professional">
+  <button class="arrow" id="prev">&#10094;</button>
+  <button class="arrow" id="next">&#10095;</button>
 
-  <div class="slideshow-container">
-    <div class="slide"><h1>Pippin, The Rolling Panda</h1><ul><li>Meet Pippin, a joyful little panda with a heart full of giggles.</li><li>His greatest delight? Tumbling down grassy hills, making the birds chirp with laughter.</li><li>He lives a cozy life in a magical, misty bamboo forest.</li><li>Pippin's playful spirit often leads him to new discoveries.</li><li>Every roll is an adventure, a joyous bounce through his charming world.</li></ul></div>
-    <div class="slide"><h1>A Misty Bamboo Forest Morning</h1><ul><li>The forest awakens draped in a soft, ethereal mist.</li><li>Sunlight filters through towering bamboo, creating a dappled wonderland.</li><li>Birds begin their morning chorus, a cheerful serenade to the rising sun.</li><li>Pippin stirs, ready for another day of exploration and playful tumbles.</li><li>The air is fresh and sweet, hinting at new wonders to unfold.</li></ul></div>
-    <div class="slide"><h1>The Tiny Blue Butterfly</h1><ul><li>A flash of vibrant sapphire, a tiny blue butterfly flutters through the morning light.</li><li>Oh dear! It finds itself in a tangle, caught in the gentle clutches of a thorny bush.</li><li>Its delicate wings are unable to break free, a tiny struggle in the vast forest.</li><li>Its iridescent beauty shines even in its predicament, a miniature gem.</li><li>A hopeful flutter, a quiet wish for help to come its way.</li></ul></div>
-    <div class="slide"><h1>A Gentle Rescue</h1><ul><li>Pippin, with his keen eyes and gentle heart, spots the little butterfly's plight.</li><li>Carefully, with his soft, padded paws, he approaches the thorny tangle.</li><li>With the utmost tenderness, he nudges and untangles the delicate wings.</li><li>The tiny blue butterfly is freed, wiggling its antennae in grateful relief.</li><li>No reward sought, just the pure joy of helping a friend in need.</li></ul></div>     
-    <div class="slide"><h1>An Unlikely Friendship Begins</h1><ul><li>The newly freed butterfly twirls and dances around Pippin, a joyful thank you.</li><li>It's a silent conversation, a spark of connection between two different souls.</li><li>From that moment on, the little blue butterfly becomes Pippin's faithful companion.</li><li>An unexpected bond forged in a moment of kindness and gratitude.</li><li>Their journey together, a testament to friendship blossoming in the most whimsical ways.</li></ul></div>
-    <div class="slide"><h1>Adventures of Pippin and His Butterfly</h1><ul><li>Together, they explore every nook and cranny of the enchanting bamboo forest.</li><li>Pippin munches happily on bamboo shoots, sharing his peaceful moments.</li><li>The little blue butterfly dances above him, a living, sparkling halo.</li><li>Every day is a new adventure, filled with shared giggles and discoveries.</li><li>Their unique friendship proves that even the smallest creatures can bring the biggest joy.</li></ul></div>
-
-    <div id="prevButton" class="nav-arrow hidden">◄</div>
-    <div id="nextButton" class="nav-arrow">▶</div>
-  </div>
+  <div class="slide active"><h1>NASA's Origins: The Space Race Begins</h1><ul><li>NASA was founded on July 29, 1958, replacing its predecessor, NACA.</li><li>Its establishment was a direct response to the Soviet Union's launch of Sputnik 1 in 1957.</li><li>The agency was created amidst the intensifying Cold War, initiating the "Space Race" with the USSR.</li><li>President Eisenhower signed the National Aeronautics and Space Act, committing the U.S. to peaceful space exploration.</li><li>The early years focused on developing missile technology into launch vehicles and establishing a robust space program infrastructure.</li></ul></div>
+  <div class="slide"><h1>Pioneering Human Spaceflight: Mercury, Gemini, and Apollo</h1><ul><li>The Mercury program (1958-1963) focused on putting the first American in space and studying human endurance.</li><li>Project Gemini (1961-1966) advanced techniques like orbital rendezvous and spacewalks, crucial for future missions.</li><li>The Apollo program (1961-1972) was famously initiated by President Kennedy's challenge to land a man on the Moon.</li><li>Apollo 11 achieved this monumental goal in July 1969 with Neil Armstrong and Buzz Aldrin.</li><li>These programs demonstrated incredible engineering prowess and human courage, securing American leadership in space.</li></ul></div>
+  <div class="slide"><h1>The Space Shuttle Era and the ISS</h1><ul><li>The Space Shuttle program (1981-2011) introduced reusable spacecraft for routine access to orbit.</li><li>Shuttles were instrumental in deploying satellites, conducting scientific experiments, and servicing the Hubble Space Telescope.</li><li>A primary objective was the construction of the International Space Station (ISS), a collaborative global effort.</li><li>The ISS serves as a permanent orbiting laboratory for microgravity research across various scientific fields.</li><li>The Shuttle era concluded after 30 years and 135 missions, paving the way for new launch capabilities.</li></ul></div>
+  <div class="slide"><h1>Modern Exploration: Robotics and Commercial Partnerships</h1><ul><li>NASA's robotic missions have revolutionized our understanding of the solar system, from Mars rovers to deep-space probes.</li><li>Flagship missions like the Hubble Space Telescope and James Webb Space Telescope provide stunning cosmic observations.</li><li>Mars Exploration Rovers (Spirit, Opportunity, Curiosity, Perseverance) have extensively studied the Red Planet's geology and potential for life.</li><li>The Commercial Crew Program partners with private companies (e.g., SpaceX, Boeing) for astronaut transport to the ISS.</li><li>These partnerships foster innovation, reduce costs, and expand access to space for both government and private initiatives.</li></ul></div>
+  <div class="slide"><h1>The Future of Space: Artemis and Mars</h1><ul><li>The Artemis program aims to return humans to the Moon by the mid-2020s, including the first woman and person of color.</li><li>Artemis seeks to establish a sustainable human presence on the Moon, leveraging resources like lunar ice.</li><li>Technologies developed for lunar exploration will serve as a stepping stone for future missions to Mars.</li><li>NASA's long-term vision includes sending humans to Mars, potentially by the late 2030s or early 2040s.</li><li>Future initiatives also encompass advanced propulsion, asteroid defense, and continued groundbreaking scientific discovery.</li></ul></div>
 
 <script>
-  let slideIndex = 0;
   const slides = document.querySelectorAll('.slide');
-  const prevButton = document.getElementById('prevButton');
-  const nextButton = document.getElementById('nextButton');
+  let currentSlide = 0;
 
-  function showSlide(n) {
-    slides.forEach(slide => slide.style.display = 'none');
-    slides[n].style.display = 'block';
-    prevButton.classList.toggle('hidden', n === 0);
-    nextButton.classList.toggle('hidden', n === slides.length - 1);
+  function showSlide(index) {
+    slides.forEach((slide, i) => {
+      slide.classList.toggle('active', i === index);
+    });
   }
 
-  function nextSlide() {
-    if (slideIndex < slides.length - 1) {
-      slideIndex++;
-      showSlide(slideIndex);
-    }
-  }
+  document.getElementById('prev').addEventListener('click', () => {
+    currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+    showSlide(currentSlide);
+  });
 
-  function prevSlide() {
-    if (slideIndex > 0) {
-      slideIndex--;
-      showSlide(slideIndex);
-    }
-  }
+  document.getElementById('next').addEventListener('click', () => {
+    currentSlide = (currentSlide + 1) % slides.length;
+    showSlide(currentSlide);
+  });
 
-  nextButton.addEventListener('click', nextSlide);
-  prevButton.addEventListener('click', prevSlide);
-
-  // Keyboard navigation
-  document.addEventListener('keydown', function(event) {
-    if (event.key === 'ArrowRight') {
-      nextSlide();
-    } else if (event.key === 'ArrowLeft') {
-      prevSlide();
+  // Optional: Keyboard navigation
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowLeft') {
+      document.getElementById('prev').click();
+    } else if (e.key === 'ArrowRight') {
+      document.getElementById('next').click();
     }
   });
 
-  showSlide(slideIndex);
+  showSlide(currentSlide); // Ensure the first slide is visible on load
 </script>
-
 </body>
 </html>
