@@ -1,0 +1,8 @@
+{
+  "python.defaultInterpreterPath": "/Users/jakob/codestuff/knighthacksVII/slidAid/slAIde/presentation_agent/.venv/bin/python",
+  "python.analysis.extraPaths": [
+    "slidAid/slAIde/presentation_agent/.venv/lib/python3.14/site-packages",
+    "slidAid/slAIde/summaryagent/.venv/lib/python3.14/site-packages",
+    "slidAid/slAIde/hostagent/.venv/lib/python3.14/site-packages"
+  ]
+}

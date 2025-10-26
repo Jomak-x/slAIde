@@ -1,0 +1,48 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "type": "shell",
+      "label": "run-presentation-agent",
+      "command": "cd ${workspaceFolder}/slidAid/slAIde/presentation_agent && UV_VENV_CLEAR=1 uv venv && . .venv/bin/activate && uv run --active .",
+      "isBackground": true,
+      "group": "none"
+    },
+    {
+      "type": "shell",
+      "label": "run-summary-agent",
+      "command": "cd ${workspaceFolder}/slidAid/slAIde/summaryagent && UV_VENV_CLEAR=1 uv venv && . .venv/bin/activate && uv run --active .",
+      "isBackground": true,
+      "group": "none"
+    },
+    {
+      "type": "shell",
+      "label": "run-host-agent",
+      "command": "cd ${workspaceFolder}/slidAid/slAIde/hostagent && UV_VENV_CLEAR=1 uv venv && . .venv/bin/activate && uv run --active .",
+      "isBackground": false,
+      "group": "none"
+    },
+    {
+      "type": "shell",
+      "label": "post-prompt-and-save-html",
+      "command": "PROMPT=\"${input:prompt}\"; ID=$(uuidgen); curl -s -X POST http://localhost:8000/ -H 'Content-Type: application/json' -d '{\"id\":\"'\"$ID\"'\", \"jsonrpc\":\"2.0\", \"method\":\"message/send\", \"params\": {\"message\": {\"role\": \"user\", \"messageId\": \"'\"$ID\"'\", \"parts\": [{\"type\": \"text\", \"text\": \"'\"$PROMPT\"'\"}]}}}' | jq -r '.result.artifacts[0].parts[0].text' > ${workspaceFolder}/slidAid/slAIde/mine.html && echo Wrote ${workspaceFolder}/slidAid/slAIde/mine.html",
+      "problemMatcher": [],
+      "group": "none"
+    },
+    {
+      "type": "shell",
+      "label": "render-html-via-host",
+      "command": "PROMPT=\"${input:prompt}\"; curl -s -X POST http://localhost:8000/render-html -H 'Content-Type: application/json' -d '{\"prompt\":\"'\"$PROMPT\"'\"}' && echo \nOpen ${workspaceFolder}/slidAid/slAIde/mine.html",
+      "problemMatcher": [],
+      "group": "none"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "prompt",
+      "type": "promptString",
+      "description": "Enter a topic (e.g., Create a presentation about renewable energy with exactly 5 slides. Return only a full <!DOCTYPE html> document.)",
+      "default": "Create a presentation about renewable energy with exactly 5 slides. Return only a full <!DOCTYPE html> document."
+    }
+  ]
+}
