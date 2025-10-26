@@ -1,240 +1,416 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>NASA: A Journey Through Space Exploration</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Monster Energy Presentation</title>
 <style>
-  :root {
-    --primary-blue: #1a4365; /* Darker NASA-like blue */
-    --accent-blue: #3498db; /* Brighter accent blue */
-    --light-grey: #f5f7fa; /* Light background */
-    --dark-grey-text: #34495e;
-    --border-grey: #dbe2ed;
-    --white: #ffffff;
-  }
-
   body {
-    font-family: 'Inter', sans-serif;
-    background-color: var(--light-grey);
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Segoe UI Emoji', 'Apple Color Emoji', 'Noto Color Emoji';
     margin: 0;
+    padding: 0;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    position: relative;
-    overflow: hidden;
-    color: var(--dark-grey-text);
+    background-color: #1a1a1a; /* Dark background for energetic theme */
+    color: #e0e0e0; /* Light text for high contrast */
+    overflow: hidden; /* Hide scrollbars on body */
+  }
+
+  .presentation-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100vh;
   }
 
   .slide {
-    display: none;
-    background-color: var(--white);
-    border: 1px solid var(--border-grey);
-    margin: 20px;
-    padding: 60px 80px;
+    background-color: #2b2b2b; /* Slightly lighter dark for slide background */
     border-radius: 12px;
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
-    max-width: 960px;
-    width: 85%;
-    min-height: 450px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+    padding: 40px 60px;
+    margin: 20px;
+    width: 80%;
+    max-width: 900px; /* Ensures slide is wider than it is long on common aspect ratios */
+    height: auto;
+    max-height: 70vh; /* Limits vertical size, ensuring it's not full screen */
+    display: none; /* Hidden by default */
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start; /* Align content to the left */
     box-sizing: border-box;
-    text-align: left;
-    transform: scale(0.98);
-    opacity: 0;
-    transition: transform 0.5s ease-in-out, opacity 0.5s ease-in-out;
+    overflow-y: auto; /* Allow scrolling within the slide if content is too long */
+    scroll-behavior: smooth; /* Smooth scroll for internal content */
   }
 
   .slide.active {
-    display: block;
-    transform: scale(1);
-    opacity: 1;
+    display: flex; /* Display the active slide */
   }
 
-  .professional h1 {
-    font-family: 'Inter', sans-serif;
-    color: var(--primary-blue);
+  h1 {
+    color: #00e676; /* Vibrant green for headings, energetic style */
+    margin-top: 0;
+    margin-bottom: 30px;
+    font-size: 2.5em;
     text-align: center;
-    font-size: 2.8em;
-    margin-bottom: 40px;
-    font-weight: 700;
-    line-height: 1.3;
+    width: 100%; /* Center the title */
   }
 
-  .professional ul {
-    list-style: none;
+  ul {
+    list-style: none; /* Remove default bullets */
     padding-left: 0;
-    margin-top: 30px;
+    margin-left: 0;
+    width: 100%;
   }
 
-  .professional li {
-    font-size: 1.3em;
-    color: var(--dark-grey-text);
-    margin-bottom: 18px;
-    line-height: 1.7;
-    position: relative;
-    padding-left: 35px;
-    font-weight: 400;
-  }
-
-  .professional li::before {
-    content: '\2022'; /* Unicode bullet point */
-    position: absolute;
-    left: 0;
-    color: var(--accent-blue);
-    font-size: 1.8em;
-    line-height: 0.8;
-    top: 50%;
-    transform: translateY(-50%);
-    font-weight: 600;
-  }
-
-  .arrow {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    font-size: 2.2em;
-    background: var(--accent-blue);
-    color: var(--white);
-    border: none;
-    border-radius: 50%;
-    width: 60px;
-    height: 60px;
-    cursor: pointer;
-    opacity: 0.7;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-    transition: all 0.3s ease;
+  li {
+    margin-bottom: 15px;
+    font-size: 1.2em;
+    line-height: 1.5;
     display: flex;
-    justify-content: center;
+    align-items: flex-start;
+  }
+
+  /* Bar Chart Specific Styles */
+  .bar-chart {
+    width: 100%;
+    margin-top: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px; /* Space between bar rows */
+    min-height: 200px; /* Ensure chart container has a minimum visual presence */
+  }
+
+  .bar-row {
+    display: flex;
     align-items: center;
-    z-index: 100;
-    outline: none; /* Remove focus outline */
+    font-size: 1.1em;
   }
 
-  .arrow:hover {
-    opacity: 1;
-    background: var(--primary-blue);
-    transform: translateY(-50%) scale(1.05);
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+  .bar-label {
+    flex-shrink: 0; /* Prevent label from shrinking */
+    width: 150px; /* Fixed width for consistent label alignment */
+    margin-right: 15px;
+    text-align: right;
+    font-weight: bold;
+    color: #a0a0a0; /* Muted color for labels */
   }
 
-  #prev { left: 40px; }
-  #next { right: 40px; }
-
-  /* Responsive adjustments */
-  @media (max-width: 1024px) {
-    .slide {
-      padding: 50px 60px;
-      width: 90%;
-    }
-    .professional h1 {
-      font-size: 2.4em;
-    }
-    .professional li {
-      font-size: 1.2em;
-    }
-    .arrow {
-      width: 50px;
-      height: 50px;
-      font-size: 1.8em;
-      left: 20px;
-      right: 20px;
-    }
+  .bar-track {
+    flex-grow: 1; /* Track fills the available space */
+    background-color: #444; /* Neutral dark background for the track */
+    height: 28px;
+    border-radius: 4px;
+    overflow: hidden; /* Ensures the fill stays within the track's bounds */
+    display: flex; /* Allows value to be inside the fill */
   }
 
-  @media (max-width: 768px) {
-    .slide {
-      padding: 40px 40px;
-      min-height: 380px;
-    }
-    .professional h1 {
-      font-size: 2em;
-      margin-bottom: 30px;
-    }
-    .professional li {
-      font-size: 1.1em;
-      margin-bottom: 15px;
-      padding-left: 30px;
-    }
-    .professional li::before {
-      font-size: 1.6em;
-    }
-    .arrow {
-      width: 45px;
-      height: 45px;
-      font-size: 1.6em;
-      left: 10px;
-      right: 10px;
-    }
+  .bar-fill {
+    background-color: #00e676; /* Vibrant green accent color for the bar fill */
+    height: 100%;
+    border-radius: 4px;
+    display: flex;
+    justify-content: flex-end; /* Align value to the right of the fill */
+    align-items: center;
+    padding-right: 10px; /* Spacing for the value */
+    box-sizing: border-box;
+    min-width: 0%; /* Initial state for animation */
+    transition: width 0.8s ease-out; /* Smooth animation for width changes */
   }
 
-  @media (max-width: 480px) {
-    .slide {
-      padding: 30px 25px;
-      min-height: 300px;
-      margin: 10px;
-    }
-    .professional h1 {
-      font-size: 1.6em;
-      margin-bottom: 25px;
-    }
-    .professional li {
-      font-size: 1em;
-      margin-bottom: 12px;
-      padding-left: 25px;
-    }
-    .professional li::before {
-      font-size: 1.4em;
-    }
-    .arrow {
-      width: 40px;
-      height: 40px;
-      font-size: 1.4em;
-    }
-    #prev { left: 5px; }
-    #next { right: 5px; }
+  .bar-value {
+    color: #1a1a1a; /* Dark text on vibrant fill for high contrast */
+    font-weight: bold;
+    font-size: 0.9em;
+    white-space: nowrap; /* Prevent the value from wrapping */
+  }
+
+  /* Navigation Buttons */
+  .navigation-buttons {
+    margin-top: 20px;
+    display: flex;
+    gap: 20px;
+    position: absolute; /* Position buttons relative to viewport */
+    bottom: 30px; /* Place at the bottom of the screen */
+  }
+
+  .nav-button {
+    background-color: #00e676; /* Vibrant green button */
+    color: #1a1a1a; /* Dark text on button */
+    border: none;
+    padding: 12px 25px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1.1em;
+    font-weight: bold;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    box-shadow: 0 4px 10px rgba(0, 230, 118, 0.3); /* Subtle glow */
+  }
+
+  .nav-button:hover:not(:disabled) {
+    background-color: #00c262; /* Slightly darker green on hover */
+    transform: translateY(-2px); /* Slight lift effect */
+  }
+
+  .nav-button:disabled {
+    background-color: #555; /* Muted color when disabled */
+    color: #bbb;
+    cursor: not-allowed;
+    box-shadow: none;
+    transform: none;
+  }
+
+  /* Accessible hiding for screen readers */
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
   }
 </style>
 </head>
-<body class="professional">
-  <button class="arrow" id="prev">&#10094;</button>
-  <button class="arrow" id="next">&#10095;</button>
+<body>
+<div class="presentation-container">
+  <div class="slides-wrapper">
+    <!-- Slides will be dynamically injected here by JavaScript -->
+  </div>
+</div>
 
-  <div class="slide active"><h1>NASA's Origins: The Space Race Begins</h1><ul><li>NASA was founded on July 29, 1958, replacing its predecessor, NACA.</li><li>Its establishment was a direct response to the Soviet Union's launch of Sputnik 1 in 1957.</li><li>The agency was created amidst the intensifying Cold War, initiating the "Space Race" with the USSR.</li><li>President Eisenhower signed the National Aeronautics and Space Act, committing the U.S. to peaceful space exploration.</li><li>The early years focused on developing missile technology into launch vehicles and establishing a robust space program infrastructure.</li></ul></div>
-  <div class="slide"><h1>Pioneering Human Spaceflight: Mercury, Gemini, and Apollo</h1><ul><li>The Mercury program (1958-1963) focused on putting the first American in space and studying human endurance.</li><li>Project Gemini (1961-1966) advanced techniques like orbital rendezvous and spacewalks, crucial for future missions.</li><li>The Apollo program (1961-1972) was famously initiated by President Kennedy's challenge to land a man on the Moon.</li><li>Apollo 11 achieved this monumental goal in July 1969 with Neil Armstrong and Buzz Aldrin.</li><li>These programs demonstrated incredible engineering prowess and human courage, securing American leadership in space.</li></ul></div>
-  <div class="slide"><h1>The Space Shuttle Era and the ISS</h1><ul><li>The Space Shuttle program (1981-2011) introduced reusable spacecraft for routine access to orbit.</li><li>Shuttles were instrumental in deploying satellites, conducting scientific experiments, and servicing the Hubble Space Telescope.</li><li>A primary objective was the construction of the International Space Station (ISS), a collaborative global effort.</li><li>The ISS serves as a permanent orbiting laboratory for microgravity research across various scientific fields.</li><li>The Shuttle era concluded after 30 years and 135 missions, paving the way for new launch capabilities.</li></ul></div>
-  <div class="slide"><h1>Modern Exploration: Robotics and Commercial Partnerships</h1><ul><li>NASA's robotic missions have revolutionized our understanding of the solar system, from Mars rovers to deep-space probes.</li><li>Flagship missions like the Hubble Space Telescope and James Webb Space Telescope provide stunning cosmic observations.</li><li>Mars Exploration Rovers (Spirit, Opportunity, Curiosity, Perseverance) have extensively studied the Red Planet's geology and potential for life.</li><li>The Commercial Crew Program partners with private companies (e.g., SpaceX, Boeing) for astronaut transport to the ISS.</li><li>These partnerships foster innovation, reduce costs, and expand access to space for both government and private initiatives.</li></ul></div>
-  <div class="slide"><h1>The Future of Space: Artemis and Mars</h1><ul><li>The Artemis program aims to return humans to the Moon by the mid-2020s, including the first woman and person of color.</li><li>Artemis seeks to establish a sustainable human presence on the Moon, leveraging resources like lunar ice.</li><li>Technologies developed for lunar exploration will serve as a stepping stone for future missions to Mars.</li><li>NASA's long-term vision includes sending humans to Mars, potentially by the late 2030s or early 2040s.</li><li>Future initiatives also encompass advanced propulsion, asteroid defense, and continued groundbreaking scientific discovery.</li></ul></div>
+<div class="navigation-buttons">
+  <button id="prevBtn" class="nav-button" aria-label="Previous Slide" disabled>Previous</button>
+  <button id="nextBtn" class="nav-button" aria-label="Next Slide">Next</button>
+</div>
 
 <script>
-  const slides = document.querySelectorAll('.slide');
-  let currentSlide = 0;
+  // Raw JSON content embedded directly into the script for self-containment
+  const slideContentData = JSON.parse(`
+    {
+      "style": "energetic",
+      "all_slides_content": [
+        "# Monster Energy: Brand Overview\\n- Founded in 2002, based in Corona, California.\\n- Established as a leading global energy drink brand.\\n- Recognized for its distinctive branding and aggressive marketing.\\n- Offers a wide array of energy drink formulations.\\n- The Coca-Cola Company holds a significant 19% ownership stake.",
+        "# Financial Performance and Market Position\\n- Achieved an impressive $7.1 billion in revenue in 2024.\\n- Reported a strong $1.7 billion in profit for the same year.\\n- Commands approximately 35% of the global energy drink market.\\n- Maintains consistent sales growth, around 10% annually.\\n- Stands as a dominant force, challenging market leader Red Bull.",
+        "# Bar Chart: Global Energy Drink Market Share\\n- Red Bull: 43\\n- Monster Energy: 35\\n- Rockstar Energy: 8\\n- 5-Hour Energy: 4\\n- Other Brands: 10\\n\\n\`\`\`bar\\nRed Bull: 43\\nMonster Energy: 35\\nRockstar Energy: 8\\n5-Hour Energy: 4\\nOther Brands: 10\\n\`\`\`",    
+        "# Global Presence and Product Diversification\\n- Products are distributed across more than 140 countries worldwide.\\n- Boasts an extensive portfolio with over 30 unique flavors.\\n- Continues to introduce new products and beverage categories.\\n- Strong international marketing drives brand recognition and sales.\\n- Adapting offerings to suit diverse regional consumer preferences.",
+        "# Strategic Alliances and Future Growth\\n- Benefiting from strategic partnership with The Coca-Cola Company.\\n- Sustaining robust sales growth at approximately 10% per year.\\n- Focused on expanding market penetration in emerging economies.\\n- Continued innovation in product development and branding.\\n- Leveraging strong brand loyalty for long-term global leadership."
+      ]
+    }
+  `);
 
-  function showSlide(index) {
-    slides.forEach((slide, i) => {
-      slide.classList.toggle('active', i === index);
+  const slidesWrapper = document.querySelector('.slides-wrapper');
+  let currentSlideIndex = 0;
+  const emojiBullet = '⚡ '; // Chosen emoji for "energetic" style
+
+  // Process and create slide elements from the input markdown content
+  slideContentData.all_slides_content.forEach((content) => {
+    const slideDiv = document.createElement('div');
+    slideDiv.classList.add('slide');
+
+    const barChartRegex = /```bar\n([\s\S]+?)\n```/;
+    const barChartMatch = content.match(barChartRegex);
+
+    let slideTitle = '';
+    const h1Match = content.match(/^#\s(.+)$/m);
+    if (h1Match) {
+      slideTitle = h1Match[1].trim();
+      slideDiv.innerHTML += `<h1>${slideTitle}</h1>`; // Add H1 to the slide
+    }
+
+    if (barChartMatch) {
+      // If a bar chart is present, create the bar chart container
+      // and store its raw data for lazy rendering.
+      // Per instructions, for bar chart slides, no other content (like bullet lists) is included.
+      const barChartData = barChartMatch[1].trim();
+      const barChartContainer = document.createElement('div');
+      barChartContainer.classList.add('bar-chart');
+      barChartContainer.setAttribute('role', 'img');
+      // Use the slide's title for a descriptive aria-label
+      barChartContainer.setAttribute('aria-label', `${slideTitle || 'Untitled'} market share chart.`);
+      slideDiv.appendChild(barChartContainer);
+      slideDiv.dataset.barChartData = barChartData; // Store raw data for JS to parse later
+    } else {
+      // For regular slides, parse list items (bullet points)
+      const lines = content.split('\n').map(line => line.trim()).filter(line => line.length > 0);
+      let listHtml = '<ul>';
+      let hasListItems = false;
+
+      lines.forEach(line => {
+        // Only process lines that are list items and not the H1 (which is already added)
+        if (line.startsWith('- ') && !line.startsWith('# ')) {
+          listHtml += `<li>${emojiBullet}${line.substring(2)}</li>`;
+          hasListItems = true;
+        }
+        // Additional markdown parsing for other elements like paragraphs can be added here
+        // if the input markdown structure becomes more complex than H1 + List for non-chart slides.
+      });
+
+      if (hasListItems) {
+        listHtml += '</ul>';
+        slideDiv.innerHTML += listHtml;
+      }
+    }
+    slidesWrapper.appendChild(slideDiv);
+  });
+
+  const slides = document.querySelectorAll('.slide');
+  const prevBtn = document.getElementById('prevBtn');
+  const nextBtn = document.getElementById('nextBtn');
+  const MIN_VISIBLE_PERCENT = 1.5; // Minimum visible width for a bar with a non-zero value
+
+  /**
+   * Renders a bar chart into the given container element.
+   * This function is idempotent: it will not re-render if already marked as rendered.
+   * @param {HTMLElement} chartElement The div.bar-chart element to render into.
+   */
+  function renderBarChart(chartElement) {
+    if (chartElement.dataset.rendered === '1') {
+      console.info('Bar chart already rendered, skipping:', chartElement);
+      return; // Prevent duplicate rendering
+    }
+
+    const rawData = chartElement.parentNode.dataset.barChartData;
+    if (!rawData) {
+      chartElement.innerHTML = '<p style="color:#aaa; text-align:center;">No chart data found.</p>';
+      console.warn('No bar chart data found for element:', chartElement);
+      chartElement.dataset.rendered = '1';
+      return;
+    }
+
+    const lines = rawData.split('\n').map(line => line.trim()).filter(line => line.length > 0);
+    const chartData = [];
+    let maxValue = 0; // Initialize maxValue to 0, handles all non-positive values gracefully
+
+    console.info('Attempting to parse bar chart data:', lines);
+
+    lines.forEach((line) => {
+      const parts = line.split(':', 1); // Split only on the first colon
+      if (parts.length === 0 || parts[0].trim() === '') {
+        console.warn(`Skipping invalid bar chart line (empty label): "${line}"`);
+        return;
+      }
+      if (line.indexOf(':') === -1) {
+        console.warn(`Skipping invalid bar chart line (missing colon for value): "${line}"`);
+        return;
+      }
+
+      const label = parts[0].trim();
+      const valueStr = line.substring(line.indexOf(':') + 1).trim();
+      // Replace commas to correctly parse numbers with thousands separators
+      const value = parseFloat(valueStr.replace(/,/g, ''));
+
+      if (isNaN(value)) {
+        console.warn(`Skipping invalid bar chart line (non-numeric value): "${line}"`);
+        return;
+      }
+
+      chartData.push({ label, value });
+      maxValue = Math.max(maxValue, value); // Find the maximum value
     });
+
+    if (chartData.length === 0) {
+      chartElement.innerHTML = '<p style="color:#aaa; text-align:center;">No valid chart data to display.</p>';
+      console.warn('No valid bar chart data could be parsed from input.');
+      chartElement.dataset.rendered = '1';
+      return;
+    }
+
+    console.info(`Bar chart parsed successfully. Maximum value found: ${maxValue}`);
+
+    chartElement.innerHTML = ''; // Clear any loading message or previous content
+    chartData.forEach(item => {
+      // Calculate width: if maxValue is 0 or negative (all values were <=0), width is 0.
+      // Otherwise, calculate percentage, ensuring tiny positive values meet MIN_VISIBLE_PERCENT.
+      const widthPercent = (maxValue > 0) ? (item.value / maxValue) * 100 : 0;
+      const finalWidth = item.value > 0 ? Math.max(widthPercent, MIN_VISIBLE_PERCENT) : 0;
+
+      const barRow = document.createElement('div');
+      barRow.classList.add('bar-row');
+      // Add a tooltip for enhanced UX and accessibility
+      barRow.setAttribute('title', `${item.label} — ${item.value.toLocaleString()}`);
+
+      const barLabel = document.createElement('span');
+      barLabel.classList.add('bar-label');
+      barLabel.textContent = item.label;
+
+      const barTrack = document.createElement('div');
+      barTrack.classList.add('bar-track');
+
+      const barFill = document.createElement('div');
+      barFill.classList.add('bar-fill');
+      barFill.style.width = `${finalWidth}%`; // Set width for animation
+
+      const barValue = document.createElement('span');
+      barValue.classList.add('bar-value');
+      barValue.textContent = item.value.toLocaleString(); // Format number for display
+
+      barFill.appendChild(barValue);
+      barTrack.appendChild(barFill);
+      barRow.appendChild(barLabel);
+      barRow.appendChild(barTrack);
+      chartElement.appendChild(barRow);
+    });
+    chartElement.dataset.rendered = '1'; // Mark as rendered
   }
 
-  document.getElementById('prev').addEventListener('click', () => {
-    currentSlide = (currentSlide - 1 + slides.length) % slides.length;
-    showSlide(currentSlide);
-  });
+  /**
+   * Displays a specific slide and manages navigation button states.
+   * Lazily renders bar charts if the active slide contains one and it hasn't been rendered yet.
+   * @param {number} index The index of the slide to display.
+   */
+  function showSlide(index) {
+    if (index < 0 || index >= slides.length) {
+      return; // Do nothing if index is out of bounds
+    }
 
-  document.getElementById('next').addEventListener('click', () => {
-    currentSlide = (currentSlide + 1) % slides.length;
-    showSlide(currentSlide);
-  });
+    // Hide all slides
+    slides.forEach(slide => {
+      slide.classList.remove('active');
+      slide.setAttribute('aria-hidden', 'true'); // Hide from screen readers
+    });
 
-  // Optional: Keyboard navigation
+    // Show the active slide
+    const activeSlide = slides[index];
+    activeSlide.classList.add('active');
+    activeSlide.setAttribute('aria-hidden', 'false'); // Make visible to screen readers
+    currentSlideIndex = index;
+
+    // Update navigation buttons' disabled state
+    prevBtn.disabled = (currentSlideIndex === 0);
+    nextBtn.disabled = (currentSlideIndex === slides.length - 1);
+
+    // Render bar chart if the active slide has one and it's not yet rendered
+    const barChartContainer = activeSlide.querySelector('.bar-chart');
+    if (barChartContainer && !barChartContainer.dataset.rendered) {
+      // A small timeout allows the slide to become visible and layout to settle
+      // before the bar chart's width transitions are applied.
+      setTimeout(() => renderBarChart(barChartContainer), 100);
+    }
+  }
+
+  // Event Listeners for navigation buttons
+  prevBtn.addEventListener('click', () => showSlide(currentSlideIndex - 1));
+  nextBtn.addEventListener('click', () => showSlide(currentSlideIndex + 1));
+
+  // Initial display: show the first slide when the page loads
+  showSlide(0);
+
+  // Keyboard navigation (Arrow keys)
   document.addEventListener('keydown', (e) => {
-    if (e.key === 'ArrowLeft') {
-      document.getElementById('prev').click();
-    } else if (e.key === 'ArrowRight') {
-      document.getElementById('next').click();
+    if (e.key === 'ArrowRight') {
+      showSlide(currentSlideIndex + 1);
+    } else if (e.key === 'ArrowLeft') {
+      showSlide(currentSlideIndex - 1);
     }
   });
 
-  showSlide(currentSlide); // Ensure the first slide is visible on load
 </script>
 </body>
 </html>
