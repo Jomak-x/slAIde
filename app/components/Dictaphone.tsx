@@ -1,5 +1,6 @@
-"use client";
+"use client";'use client';
 
+import dynamic from "next/dynamic";
 import SpeechRecognition, { useSpeechRecognition } from "react-speech-recognition";
 import { useEffect, useRef } from "react";
 
@@ -10,6 +11,8 @@ interface DictaphoneProps {
 const Dictaphone: React.FC<DictaphoneProps> = ({ appendToMessage }) => {
   const { transcript, listening, resetTranscript, browserSupportsSpeechRecognition } =
     useSpeechRecognition();
+
+    
 
   // Keep track of what has already been appended
   const lastTranscriptRef = useRef("");

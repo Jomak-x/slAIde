@@ -1,6 +1,10 @@
 "use client";
 
+import dynamic from "next/dynamic";
 import React from "react";
+const Dictaphone = dynamic(() => import("../components/Dictaphone"), {
+  ssr: false, // client-only
+});
 
 const features = [
   {
