@@ -1,416 +1,488 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Monster Energy Presentation</title>
+<title>Miso's Whimsical Adventures</title>
 <style>
+  :root {
+    /* Whimsical Theme Colors */
+    --whimsical-bg-color: #f0f8ff; /* Alice Blue */
+    --whimsical-slide-bg: #ffffff;
+    --whimsical-text-color: #333366; /* Dark Slate Blue */
+    --whimsical-heading-color: #6a5acd; /* Slate Blue */
+    --whimsical-button-bg: #add8e6; /* Light Blue */
+    --whimsical-button-text: #333366;
+    --whimsical-button-hover-bg: #6a5acd;
+    --whimsical-button-hover-text: #ffffff;
+    --whimsical-bar-track: #e0e0f8; /* Light pastel lavender */
+    --whimsical-bar-fill: #ff69b4; /* Hot Pink */
+    --whimsical-bar-value-text: #ffffff;
+  }
+
   body {
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Segoe UI Emoji', 'Apple Color Emoji', 'Noto Color Emoji';
     margin: 0;
-    padding: 0;
+    font-family: 'Segoe UI Emoji', 'Apple Color Emoji', 'Noto Color Emoji', sans-serif;
+    background-color: var(--whimsical-bg-color);
+    color: var(--whimsical-text-color);
     display: flex;
-    flex-direction: column;
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    background-color: #1a1a1a; /* Dark background for energetic theme */
-    color: #e0e0e0; /* Light text for high contrast */
-    overflow: hidden; /* Hide scrollbars on body */
-  }
-
-  .presentation-container {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    height: 100vh;
-  }
-
-  .slide {
-    background-color: #2b2b2b; /* Slightly lighter dark for slide background */
-    border-radius: 12px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
-    padding: 40px 60px;
-    margin: 20px;
-    width: 80%;
-    max-width: 900px; /* Ensures slide is wider than it is long on common aspect ratios */
-    height: auto;
-    max-height: 70vh; /* Limits vertical size, ensuring it's not full screen */
-    display: none; /* Hidden by default */
-    flex-direction: column;
-    justify-content: center;
-    align-items: flex-start; /* Align content to the left */
-    box-sizing: border-box;
-    overflow-y: auto; /* Allow scrolling within the slide if content is too long */
-    scroll-behavior: smooth; /* Smooth scroll for internal content */
-  }
-
-  .slide.active {
-    display: flex; /* Display the active slide */
+    overflow: hidden;
+    line-height: 1.6;
   }
 
   h1 {
-    color: #00e676; /* Vibrant green for headings, energetic style */
-    margin-top: 0;
-    margin-bottom: 30px;
-    font-size: 2.5em;
-    text-align: center;
-    width: 100%; /* Center the title */
+    color: var(--whimsical-heading-color);
+    margin-bottom: 25px;
+    font-size: 2.2em;
+    text-shadow: 1px 1px 2px rgba(106, 90, 205, 0.3);
+  }
+
+  p {
+    margin-bottom: 15px;
   }
 
   ul {
-    list-style: none; /* Remove default bullets */
+    list-style: none;
     padding-left: 0;
-    margin-left: 0;
-    width: 100%;
+    margin-top: 20px;
   }
 
   li {
-    margin-bottom: 15px;
-    font-size: 1.2em;
-    line-height: 1.5;
-    display: flex;
-    align-items: flex-start;
+    margin-bottom: 12px;
+    font-size: 1.15em;
+    padding-left: 5px; /* Adjust for emoji visual alignment */
   }
 
-  /* Bar Chart Specific Styles */
+  .slides-container {
+    width: 85vw; /* Slightly wider than 70vh */
+    max-width: 1000px;
+    height: 65vh;
+    max-height: 600px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+  }
+
+  .slide {
+    background-color: var(--whimsical-slide-bg);
+    border: 3px solid var(--whimsical-heading-color);
+    border-radius: 20px;
+    padding: 40px 60px;
+    box-shadow: 0 8px 30px rgba(106, 90, 205, 0.2);
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+    display: none;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    overflow-y: auto;
+    transition: transform 0.5s ease-out, opacity 0.5s ease-out;
+  }
+
+  .slide.active {
+    display: flex;
+    transform: scale(1);
+    opacity: 1;
+  }
+
+  .nav-button {
+    position: fixed;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: var(--whimsical-button-bg);
+    color: var(--whimsical-button-text);
+    border: 2px solid var(--whimsical-button-text);
+    border-radius: 50%;
+    width: 65px;
+    height: 65px;
+    font-size: 2.5em;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: background-color 0.3s, color 0.3s, box-shadow 0.3s, border-color 0.3s;
+    user-select: none;
+    z-index: 1000;
+    font-weight: bold;
+  }
+
+  .nav-button:hover:not(:disabled) {
+    background-color: var(--whimsical-button-hover-bg);
+    color: var(--whimsical-button-hover-text);
+    border-color: var(--whimsical-button-hover-bg);
+    box-shadow: 0 0 15px rgba(106, 90, 205, 0.4);
+  }
+
+  .nav-button:disabled {
+    border-color: #cccccc;
+    color: #cccccc;
+    background-color: #f0f0f0;
+    cursor: not-allowed;
+    box-shadow: none;
+  }
+
+  #prevButton { left: 4vw; }
+  #nextButton { right: 4vw; }
+
+  /* Bar Chart Styles */
   .bar-chart {
     width: 100%;
     margin-top: 30px;
     display: flex;
     flex-direction: column;
-    gap: 15px; /* Space between bar rows */
-    min-height: 200px; /* Ensure chart container has a minimum visual presence */
+    gap: 18px;
+    padding-bottom: 20px;
   }
 
   .bar-row {
     display: flex;
     align-items: center;
-    font-size: 1.1em;
+    min-height: 45px;
   }
 
   .bar-label {
-    flex-shrink: 0; /* Prevent label from shrinking */
-    width: 150px; /* Fixed width for consistent label alignment */
-    margin-right: 15px;
-    text-align: right;
+    width: 25%;
+    flex-shrink: 0;
+    margin-right: 20px;
     font-weight: bold;
-    color: #a0a0a0; /* Muted color for labels */
+    font-size: 1.1em;
   }
 
   .bar-track {
-    flex-grow: 1; /* Track fills the available space */
-    background-color: #444; /* Neutral dark background for the track */
-    height: 28px;
-    border-radius: 4px;
-    overflow: hidden; /* Ensures the fill stays within the track's bounds */
-    display: flex; /* Allows value to be inside the fill */
+    flex-grow: 1;
+    background-color: var(--whimsical-bar-track);
+    height: 35px;
+    border-radius: 8px;
+    position: relative;
+    overflow: hidden;
   }
 
   .bar-fill {
-    background-color: #00e676; /* Vibrant green accent color for the bar fill */
     height: 100%;
-    border-radius: 4px;
+    background-color: var(--whimsical-bar-fill);
+    width: 0%;
+    border-radius: 8px;
     display: flex;
-    justify-content: flex-end; /* Align value to the right of the fill */
     align-items: center;
-    padding-right: 10px; /* Spacing for the value */
+    justify-content: flex-end;
+    padding-right: 12px;
     box-sizing: border-box;
-    min-width: 0%; /* Initial state for animation */
-    transition: width 0.8s ease-out; /* Smooth animation for width changes */
+    transition: width 0.8s ease-out;
+    box-shadow: inset 0 0 5px rgba(0,0,0,0.1);
   }
 
   .bar-value {
-    color: #1a1a1a; /* Dark text on vibrant fill for high contrast */
+    color: var(--whimsical-bar-value-text);
     font-weight: bold;
-    font-size: 0.9em;
-    white-space: nowrap; /* Prevent the value from wrapping */
+    font-size: 1em;
+    text-shadow: 0 0 3px rgba(0,0,0,0.4);
   }
 
-  /* Navigation Buttons */
-  .navigation-buttons {
-    margin-top: 20px;
-    display: flex;
-    gap: 20px;
-    position: absolute; /* Position buttons relative to viewport */
-    bottom: 30px; /* Place at the bottom of the screen */
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .slides-container {
+      width: 95vw;
+      height: 75vh;
+    }
+    .slide {
+      padding: 30px 40px;
+      border-width: 2px;
+    }
+    h1 {
+      font-size: 1.8em;
+      margin-bottom: 20px;
+    }
+    li {
+      font-size: 1em;
+      margin-bottom: 10px;
+    }
+    .nav-button {
+      width: 50px;
+      height: 50px;
+      font-size: 2em;
+    }
+    #prevButton { left: 2vw; }
+    #nextButton { right: 2vw; }
+    .bar-label {
+      width: 30%;
+      margin-right: 10px;
+      font-size: 0.9em;
+    }
+    .bar-track {
+      height: 30px;
+    }
+    .bar-value {
+      font-size: 0.8em;
+    }
   }
 
-  .nav-button {
-    background-color: #00e676; /* Vibrant green button */
-    color: #1a1a1a; /* Dark text on button */
-    border: none;
-    padding: 12px 25px;
-    border-radius: 8px;
-    cursor: pointer;
-    font-size: 1.1em;
-    font-weight: bold;
-    transition: background-color 0.3s ease, transform 0.2s ease;
-    box-shadow: 0 4px 10px rgba(0, 230, 118, 0.3); /* Subtle glow */
+  @media (max-width: 480px) {
+    .slide {
+      padding: 20px 25px;
+    }
+    h1 {
+      font-size: 1.5em;
+      margin-bottom: 15px;
+    }
+    .nav-button {
+      width: 40px;
+      height: 40px;
+      font-size: 1.5em;
+    }
+    .bar-row {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 5px;
+    }
+    .bar-label {
+      width: 100%;
+      margin-bottom: 5px;
+      font-size: 0.9em;
+    }
+    .bar-track {
+      width: 100%;
+      height: 25px;
+    }
   }
 
-  .nav-button:hover:not(:disabled) {
-    background-color: #00c262; /* Slightly darker green on hover */
-    transform: translateY(-2px); /* Slight lift effect */
-  }
-
-  .nav-button:disabled {
-    background-color: #555; /* Muted color when disabled */
-    color: #bbb;
-    cursor: not-allowed;
-    box-shadow: none;
-    transform: none;
-  }
-
-  /* Accessible hiding for screen readers */
-  .sr-only {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    padding: 0;
-    margin: -1px;
-    overflow: hidden;
-    clip: rect(0, 0, 0, 0);
-    white-space: nowrap;
-    border-width: 0;
-  }
 </style>
 </head>
 <body>
-<div class="presentation-container">
-  <div class="slides-wrapper">
-    <!-- Slides will be dynamically injected here by JavaScript -->
-  </div>
-</div>
 
-<div class="navigation-buttons">
-  <button id="prevBtn" class="nav-button" aria-label="Previous Slide" disabled>Previous</button>
-  <button id="nextBtn" class="nav-button" aria-label="Next Slide">Next</button>
-</div>
+<button id="prevButton" class="nav-button" aria-label="Previous Slide">◀</button>
+<button id="nextButton" class="nav-button" aria-label="Next Slide">▶</button>
+
+<div class="slides-container"></div>
 
 <script>
-  // Raw JSON content embedded directly into the script for self-containment
-  const slideContentData = JSON.parse(`
-    {
-      "style": "energetic",
-      "all_slides_content": [
-        "# Monster Energy: Brand Overview\\n- Founded in 2002, based in Corona, California.\\n- Established as a leading global energy drink brand.\\n- Recognized for its distinctive branding and aggressive marketing.\\n- Offers a wide array of energy drink formulations.\\n- The Coca-Cola Company holds a significant 19% ownership stake.",
-        "# Financial Performance and Market Position\\n- Achieved an impressive $7.1 billion in revenue in 2024.\\n- Reported a strong $1.7 billion in profit for the same year.\\n- Commands approximately 35% of the global energy drink market.\\n- Maintains consistent sales growth, around 10% annually.\\n- Stands as a dominant force, challenging market leader Red Bull.",
-        "# Bar Chart: Global Energy Drink Market Share\\n- Red Bull: 43\\n- Monster Energy: 35\\n- Rockstar Energy: 8\\n- 5-Hour Energy: 4\\n- Other Brands: 10\\n\\n\`\`\`bar\\nRed Bull: 43\\nMonster Energy: 35\\nRockstar Energy: 8\\n5-Hour Energy: 4\\nOther Brands: 10\\n\`\`\`",    
-        "# Global Presence and Product Diversification\\n- Products are distributed across more than 140 countries worldwide.\\n- Boasts an extensive portfolio with over 30 unique flavors.\\n- Continues to introduce new products and beverage categories.\\n- Strong international marketing drives brand recognition and sales.\\n- Adapting offerings to suit diverse regional consumer preferences.",
-        "# Strategic Alliances and Future Growth\\n- Benefiting from strategic partnership with The Coca-Cola Company.\\n- Sustaining robust sales growth at approximately 10% per year.\\n- Focused on expanding market penetration in emerging economies.\\n- Continued innovation in product development and branding.\\n- Leveraging strong brand loyalty for long-term global leadership."
-      ]
-    }
-  `);
+const allSlidesContent = [
+  "# Introducing Miso: The Curious Kitten\n- Miso is a tiny gray kitten living in a sunlit town.\n- He possesses an insatiable curiosity about everything around him.\n- Leaves, shadows, and bells on collars all spark his interest.\n- Despite his enthusiasm, Miso has a small problem: he's clumsy.\n- His pounces often end in an adorable tumble.",
+  "# Miso's Tumble and the Red Ball\n- One morning, Miso spotted a bright red ball rolling down a path.\n- He eagerly pounced, but his clumsiness led him to tumble with it.\n- Instead of frustration, his journey became a series of bounces and rolls.\n- The red ball guided him on an unexpected adventure.\n- His playful tumble eventually led him to a soft, colorful destination.",
+  "# A Field of Flowers: A Clumsy Landing\n- Miso's tumble concluded with a soft landing in a pile of vibrant flowers.\n- A gentle breeze scattered petals, making him look like a fluffy flower monster.\n- His accidental journey turned into a whimsical, beautiful moment.\n- The clumsy landing brought him unexpected delight and a picturesque scene.\n- He found himself surrounded by fragrant blossoms.",
+  "# Poppy Joins the Fun\n- Suddenly, Miso's best friend, Poppy the calico cat, appeared.\n- Poppy \"giggled\" at Miso's charming, petal-covered appearance.\n- She quickly joined him amidst the soft pile of flowers.\n- Together, they began batting the bright red ball back and forth.\n- Their shared joy amplified the playful atmosphere.",
+  "# Adventures in the Sunlit Town\n- Miso and Poppy chased the red ball all over their sunlit town.\n- Their playful pursuit took them through lush gardens.\n- They explored hidden spots, darting under fences with ease.\n- The adventure led them around the grand fountain in the town square.\n- Their day was filled with delightful discoveries and energetic play.",
+  "# Friendship and Future Dreams\n- As the sun set, both Miso and Poppy were wonderfully exhausted.\n- Their fur was lightly dusted with petals and a little bit of dirt from their adventures.\n- They found a warm patch of sunlight and curled up together.\n- Their tiny paws intertwined, a testament to their deep friendship.\n- They drifted off to sleep, dreaming of more exciting escapades to come."
+];
 
-  const slidesWrapper = document.querySelector('.slides-wrapper');
-  let currentSlideIndex = 0;
-  const emojiBullet = '⚡ '; // Chosen emoji for "energetic" style
+const slidesContainer = document.querySelector('.slides-container');
+let currentSlideIndex = 0;
+// Chosen emoji for 'whimsical' style, reflecting flowers from the story.
+const emojiBullet = '🌸';
 
-  // Process and create slide elements from the input markdown content
-  slideContentData.all_slides_content.forEach((content) => {
-    const slideDiv = document.createElement('div');
-    slideDiv.classList.add('slide');
+/**
+ * Creates a slide element from markdown content.
+ * Handles titles, bullet points, and bar chart blocks.
+ * @param {string} content - Markdown content for the slide.
+ * @returns {HTMLElement} The created slide div element.
+ */
+function createSlideElement(content) {
+  const slide = document.createElement('div');
+  slide.className = 'slide';
 
-    const barChartRegex = /```bar\n([\s\S]+?)\n```/;
-    const barChartMatch = content.match(barChartRegex);
+  // Extract H1 title (first line starting with '#')
+  const h1Match = content.match(/^#\s*(.*)/m);
+  const title = h1Match ? h1Match[1].trim() : '';
+  if (title) {
+    const h1 = document.createElement('h1');
+    h1.textContent = title;
+    slide.appendChild(h1);
+  }
 
-    let slideTitle = '';
-    const h1Match = content.match(/^#\s(.+)$/m);
-    if (h1Match) {
-      slideTitle = h1Match[1].trim();
-      slideDiv.innerHTML += `<h1>${slideTitle}</h1>`; // Add H1 to the slide
-    }
+  // Check for bar chart block
+  const barChartMatch = content.match(/```bar\s*([\s\S]*?)\s*```/);
 
-    if (barChartMatch) {
-      // If a bar chart is present, create the bar chart container
-      // and store its raw data for lazy rendering.
-      // Per instructions, for bar chart slides, no other content (like bullet lists) is included.
-      const barChartData = barChartMatch[1].trim();
-      const barChartContainer = document.createElement('div');
-      barChartContainer.classList.add('bar-chart');
-      barChartContainer.setAttribute('role', 'img');
-      // Use the slide's title for a descriptive aria-label
-      barChartContainer.setAttribute('aria-label', `${slideTitle || 'Untitled'} market share chart.`);
-      slideDiv.appendChild(barChartContainer);
-      slideDiv.dataset.barChartData = barChartData; // Store raw data for JS to parse later
-    } else {
-      // For regular slides, parse list items (bullet points)
-      const lines = content.split('\n').map(line => line.trim()).filter(line => line.length > 0);
-      let listHtml = '<ul>';
-      let hasListItems = false;
-
-      lines.forEach(line => {
-        // Only process lines that are list items and not the H1 (which is already added)
-        if (line.startsWith('- ') && !line.startsWith('# ')) {
-          listHtml += `<li>${emojiBullet}${line.substring(2)}</li>`;
-          hasListItems = true;
-        }
-        // Additional markdown parsing for other elements like paragraphs can be added here
-        // if the input markdown structure becomes more complex than H1 + List for non-chart slides.
+  if (barChartMatch) {
+    // This slide contains a bar chart. Create the container for it.
+    const barDiv = document.createElement('div');
+    barDiv.className = 'bar-chart';
+    barDiv.setAttribute('role', 'img');
+    // Provide a descriptive aria-label for accessibility
+    barDiv.setAttribute('aria-label', title ? `${title} bar chart` : 'Data visualization bar chart');
+    barDiv.dataset.chartData = barChartMatch[1].trim(); // Store raw data for lazy rendering
+    slide.appendChild(barDiv);
+    console.info('Parsed a bar chart slide: ' + (title || 'Untitled chart'));
+  } else {
+    // If no bar chart, parse bullet points
+    // Lines starting with '-'
+    const bulletLines = content.split('\n').filter(line => line.trim().startsWith('-'));
+    if (bulletLines.length > 0) {
+      const ul = document.createElement('ul');
+      bulletLines.forEach(line => {
+        const li = document.createElement('li');
+        // Insert emoji directly into the list item text
+        li.textContent = emojiBullet + ' ' + line.replace(/^\s*-\s*/, '').trim();
+        ul.appendChild(li);
       });
-
-      if (hasListItems) {
-        listHtml += '</ul>';
-        slideDiv.innerHTML += listHtml;
-      }
-    }
-    slidesWrapper.appendChild(slideDiv);
-  });
-
-  const slides = document.querySelectorAll('.slide');
-  const prevBtn = document.getElementById('prevBtn');
-  const nextBtn = document.getElementById('nextBtn');
-  const MIN_VISIBLE_PERCENT = 1.5; // Minimum visible width for a bar with a non-zero value
-
-  /**
-   * Renders a bar chart into the given container element.
-   * This function is idempotent: it will not re-render if already marked as rendered.
-   * @param {HTMLElement} chartElement The div.bar-chart element to render into.
-   */
-  function renderBarChart(chartElement) {
-    if (chartElement.dataset.rendered === '1') {
-      console.info('Bar chart already rendered, skipping:', chartElement);
-      return; // Prevent duplicate rendering
-    }
-
-    const rawData = chartElement.parentNode.dataset.barChartData;
-    if (!rawData) {
-      chartElement.innerHTML = '<p style="color:#aaa; text-align:center;">No chart data found.</p>';
-      console.warn('No bar chart data found for element:', chartElement);
-      chartElement.dataset.rendered = '1';
-      return;
-    }
-
-    const lines = rawData.split('\n').map(line => line.trim()).filter(line => line.length > 0);
-    const chartData = [];
-    let maxValue = 0; // Initialize maxValue to 0, handles all non-positive values gracefully
-
-    console.info('Attempting to parse bar chart data:', lines);
-
-    lines.forEach((line) => {
-      const parts = line.split(':', 1); // Split only on the first colon
-      if (parts.length === 0 || parts[0].trim() === '') {
-        console.warn(`Skipping invalid bar chart line (empty label): "${line}"`);
-        return;
-      }
-      if (line.indexOf(':') === -1) {
-        console.warn(`Skipping invalid bar chart line (missing colon for value): "${line}"`);
-        return;
-      }
-
-      const label = parts[0].trim();
-      const valueStr = line.substring(line.indexOf(':') + 1).trim();
-      // Replace commas to correctly parse numbers with thousands separators
-      const value = parseFloat(valueStr.replace(/,/g, ''));
-
-      if (isNaN(value)) {
-        console.warn(`Skipping invalid bar chart line (non-numeric value): "${line}"`);
-        return;
-      }
-
-      chartData.push({ label, value });
-      maxValue = Math.max(maxValue, value); // Find the maximum value
-    });
-
-    if (chartData.length === 0) {
-      chartElement.innerHTML = '<p style="color:#aaa; text-align:center;">No valid chart data to display.</p>';
-      console.warn('No valid bar chart data could be parsed from input.');
-      chartElement.dataset.rendered = '1';
-      return;
-    }
-
-    console.info(`Bar chart parsed successfully. Maximum value found: ${maxValue}`);
-
-    chartElement.innerHTML = ''; // Clear any loading message or previous content
-    chartData.forEach(item => {
-      // Calculate width: if maxValue is 0 or negative (all values were <=0), width is 0.
-      // Otherwise, calculate percentage, ensuring tiny positive values meet MIN_VISIBLE_PERCENT.
-      const widthPercent = (maxValue > 0) ? (item.value / maxValue) * 100 : 0;
-      const finalWidth = item.value > 0 ? Math.max(widthPercent, MIN_VISIBLE_PERCENT) : 0;
-
-      const barRow = document.createElement('div');
-      barRow.classList.add('bar-row');
-      // Add a tooltip for enhanced UX and accessibility
-      barRow.setAttribute('title', `${item.label} — ${item.value.toLocaleString()}`);
-
-      const barLabel = document.createElement('span');
-      barLabel.classList.add('bar-label');
-      barLabel.textContent = item.label;
-
-      const barTrack = document.createElement('div');
-      barTrack.classList.add('bar-track');
-
-      const barFill = document.createElement('div');
-      barFill.classList.add('bar-fill');
-      barFill.style.width = `${finalWidth}%`; // Set width for animation
-
-      const barValue = document.createElement('span');
-      barValue.classList.add('bar-value');
-      barValue.textContent = item.value.toLocaleString(); // Format number for display
-
-      barFill.appendChild(barValue);
-      barTrack.appendChild(barFill);
-      barRow.appendChild(barLabel);
-      barRow.appendChild(barTrack);
-      chartElement.appendChild(barRow);
-    });
-    chartElement.dataset.rendered = '1'; // Mark as rendered
-  }
-
-  /**
-   * Displays a specific slide and manages navigation button states.
-   * Lazily renders bar charts if the active slide contains one and it hasn't been rendered yet.
-   * @param {number} index The index of the slide to display.
-   */
-  function showSlide(index) {
-    if (index < 0 || index >= slides.length) {
-      return; // Do nothing if index is out of bounds
-    }
-
-    // Hide all slides
-    slides.forEach(slide => {
-      slide.classList.remove('active');
-      slide.setAttribute('aria-hidden', 'true'); // Hide from screen readers
-    });
-
-    // Show the active slide
-    const activeSlide = slides[index];
-    activeSlide.classList.add('active');
-    activeSlide.setAttribute('aria-hidden', 'false'); // Make visible to screen readers
-    currentSlideIndex = index;
-
-    // Update navigation buttons' disabled state
-    prevBtn.disabled = (currentSlideIndex === 0);
-    nextBtn.disabled = (currentSlideIndex === slides.length - 1);
-
-    // Render bar chart if the active slide has one and it's not yet rendered
-    const barChartContainer = activeSlide.querySelector('.bar-chart');
-    if (barChartContainer && !barChartContainer.dataset.rendered) {
-      // A small timeout allows the slide to become visible and layout to settle
-      // before the bar chart's width transitions are applied.
-      setTimeout(() => renderBarChart(barChartContainer), 100);
+      slide.appendChild(ul);
+    } else if (!h1Match) {
+      // If no H1 and no bullets, add content as paragraph(s)
+      const paragraphs = content.split('\n').filter(line => line.trim() !== '');
+      paragraphs.forEach(pText => {
+        const p = document.createElement('p');
+        p.textContent = pText.trim();
+        slide.appendChild(p);
+      });
     }
   }
+  return slide;
+}
 
-  // Event Listeners for navigation buttons
-  prevBtn.addEventListener('click', () => showSlide(currentSlideIndex - 1));
-  nextBtn.addEventListener('click', () => showSlide(currentSlideIndex + 1));
+// Populate the slides container
+allSlidesContent.forEach(content => {
+  slidesContainer.appendChild(createSlideElement(content));
+});
 
-  // Initial display: show the first slide when the page loads
-  showSlide(0);
+const slides = document.querySelectorAll('.slide');
+const prevButton = document.getElementById('prevButton');
+const nextButton = document.getElementById('nextButton');
 
-  // Keyboard navigation (Arrow keys)
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'ArrowRight') {
-      showSlide(currentSlideIndex + 1);
-    } else if (e.key === 'ArrowLeft') {
-      showSlide(currentSlideIndex - 1);
+// Minimum percentage width for a bar to be visible, even if its value is very small.
+const MIN_VISIBLE_PERCENT = 1.5;
+
+/**
+ * Renders a bar chart inside the provided container.
+ * This function is idempotent, meaning it won't render twice if called repeatedly.
+ * @param {HTMLElement} barDiv - The div element with class 'bar-chart' and data-chartData.
+ */
+function renderBarChart(barDiv) {
+  // Check if chart is already rendered to ensure idempotence
+  if (barDiv.dataset.rendered === '1') {
+    console.info('Bar chart already rendered, skipping.');
+    return;
+  }
+
+  const rawData = barDiv.dataset.chartData;
+  if (!rawData) {
+    console.warn('Bar chart container found but no chart data (data-chartData attribute) was present.');
+    return;
+  }
+
+  const chartData = [];
+  const lines = rawData.split('\n').map(l => l.trim()).filter(l => l.length > 0);
+  let maxValue = 0; // Initialize max value to determine bar scaling
+
+  // Parse each line of the bar chart data
+  lines.forEach(line => {
+    const idx = line.indexOf(':');
+    if (idx === -1) {
+      console.warn(`Bar Chart Warning: Skipping invalid line (missing colon): "${line}"`);
+      return;
+    }
+    const label = line.slice(0, idx).trim();
+    // Remove commas for number parsing, supporting locales like "1,234.56"
+    const valueStr = line.slice(idx + 1).trim().replace(/,/g, '');
+    const value = parseFloat(valueStr);
+
+    if (isNaN(value)) {
+      console.warn(`Bar Chart Warning: Skipping invalid number format in line: "${line}"`);
+      return;
+    }
+    chartData.push({ label, value });
+    if (value > maxValue) {
+      maxValue = value;
     }
   });
 
+  // Clear previous content and render new bars
+  barDiv.innerHTML = '';
+  console.info(`Bar chart parsed with maxValue: ${maxValue}`);
+
+  if (chartData.length === 0) {
+    barDiv.textContent = 'No valid data to display for this chart.';
+    barDiv.dataset.rendered = '1';
+    return;
+  }
+
+  chartData.forEach(item => {
+    let widthPercent = 0;
+    if (maxValue > 0) {
+      // Linear scaling: (value / maxValue) * 100
+      widthPercent = (item.value / maxValue) * 100;
+      // Apply minimum visible percentage for non-zero values
+      if (item.value > 0 && widthPercent < MIN_VISIBLE_PERCENT) {
+        widthPercent = MIN_VISIBLE_PERCENT;
+      }
+    } else if (item.value > 0) {
+      // If maxValue is 0 or negative but current value is positive, still show MIN_VISIBLE_PERCENT
+      widthPercent = MIN_VISIBLE_PERCENT;
+    }
+
+    const barRow = document.createElement('div');
+    barRow.className = 'bar-row';
+    // Add tooltip for extra information
+    barRow.title = `${item.label} — ${item.value.toLocaleString()}`;
+    barRow.innerHTML = `
+      <span class="bar-label">${item.label}</span>
+      <div class="bar-track">
+        <div class="bar-fill" style="width:0%;">
+          <span class="bar-value">${item.value.toLocaleString()}</span>
+        </div>
+      </div>`;
+    barDiv.appendChild(barRow);
+
+    // Apply width with a slight delay to trigger CSS transition animation
+    const fill = barRow.querySelector('.bar-fill');
+    if (fill) {
+      setTimeout(() => {
+        fill.style.width = widthPercent + '%';
+      }, 50); // Small delay to ensure initial render is 0% before transition
+    }
+  });
+
+  // Mark as rendered to prevent future re-renders
+  barDiv.dataset.rendered = '1';
+}
+
+/**
+ * Displays the slide at the given index and updates navigation buttons.
+ * @param {number} idx - The index of the slide to show.
+ */
+function showSlide(idx) {
+  if (idx < 0 || idx >= slides.length) {
+    return; // Prevent out-of-bounds access
+  }
+
+  // Hide all slides
+  slides.forEach(s => s.classList.remove('active'));
+
+  // Show the target slide
+  slides[idx].classList.add('active');
+  currentSlideIndex = idx;
+
+  // Update navigation button states
+  prevButton.disabled = idx === 0;
+  nextButton.disabled = idx === slides.length - 1;
+
+  // If the active slide contains a bar chart, render it
+  const bar = slides[idx].querySelector('.bar-chart');
+  if (bar) {
+    // Render with a slight delay to ensure slide layout is settled
+    setTimeout(() => {
+      renderBarChart(bar);
+    }, 100);
+  }
+}
+
+// Add event listeners for navigation buttons
+prevButton.addEventListener('click', () => showSlide(currentSlideIndex - 1));
+nextButton.addEventListener('click', () => showSlide(currentSlideIndex + 1));
+
+// Add keyboard navigation
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'ArrowRight' || e.key === ' ') {
+    showSlide(currentSlideIndex + 1);
+  } else if (e.key === 'ArrowLeft') {
+    showSlide(currentSlideIndex - 1);
+  }
+});
+
+// Initialize the presentation by showing the first slide
+showSlide(0);
 </script>
 </body>
 </html>
