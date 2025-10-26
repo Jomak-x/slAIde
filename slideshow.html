@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Pippin's Whimsical Adventures</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Indie+Flower&family=Nunito:wght@400;700&display=swap');
+
+  body {
+    margin: 0;
+    font-family: 'Nunito', sans-serif;
+    background: linear-gradient(135deg, #e0ffe0 0%, #d0e8d0 50%, #c0d8c0 100%); /* Soft, whimsical green gradient */
+    overflow: hidden; /* Hide scrollbars for full-screen slide display */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    color: #4A4A4A;
+  }
+
+  .slideshow-container {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+  }
+
+  .slide {
+    background-color: rgba(255, 255, 255, 0.95); /* Slightly transparent white */
+    border: 3px dashed #A8D8A8; /* Whimsical dashed border */
+    padding: 40px 60px;
+    border-radius: 25px; /* More rounded corners */
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1); /* Softer, larger shadow */
+    width: 80%;
+    max-width: 800px;
+    height: auto;
+    min-height: 400px; /* Ensure a minimum height */
+    display: none; /* Hidden by default */
+    box-sizing: border-box;
+    position: relative;
+    text-align: center; /* Center content for whimsical feel */
+  }
+
+  .slide:first-of-type {
+    display: block; /* Show the first slide initially */
+  }
+
+  /* Whimsical styling for headings */
+  .slide h1 {
+    font-family: 'Indie Flower', cursive;
+    color: #5A8D5A; /* Gentle green for titles */
+    font-size: 3.2em;
+    margin-bottom: 30px;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.05); /* Soft text shadow */
+    line-height: 1.2;
+  }
+
+  /* Whimsical styling for lists */
+  .slide ul {
+    list-style: none; /* Remove default bullet points */
+    padding: 0;
+    margin-top: 20px;
+    text-align: left; /* Align list items to left */
+    max-width: 600px; /* Constrain width for better readability */
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .slide ul li {
+    font-size: 1.3em;
+    line-height: 1.6;
+    margin-bottom: 15px;
+    position: relative;
+    padding-left: 30px; /* Space for custom bullet */
+  }
+
+  .slide ul li::before {
+    content: '🌿'; /* Whimsical bullet point */
+    position: absolute;
+    left: 0;
+    color: #8BC34A; /* A brighter green for bullets */
+    font-size: 1.1em;
+    top: 0;
+  }
+
+  .nav-arrow {
+    position: absolute;
+    bottom: 50px; /* Position at the bottom */
+    background-color: rgba(255, 255, 255, 0.7);
+    border: 2px solid #8BC34A;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2.5em;
+    cursor: pointer;
+    color: #5A8D5A;
+    user-select: none;
+    transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  }
+
+  .nav-arrow:hover {
+    background-color: #8BC34A;
+    color: white;
+    transform: scale(1.1); /* Slight bounce on hover */
+  }
+
+  #nextButton {
+    right: 50px;
+  }
+
+  #prevButton {
+    left: 50px;
+  }
+
+  .nav-arrow.hidden {
+    display: none;
+  }
+</style>
+</head>
+<body class="whimsical">
+
+  <div class="slideshow-container">
+    <div class="slide"><h1>Pippin, The Rolling Panda</h1><ul><li>Meet Pippin, a joyful little panda with a heart full of giggles.</li><li>His greatest delight? Tumbling down grassy hills, making the birds chirp with laughter.</li><li>He lives a cozy life in a magical, misty bamboo forest.</li><li>Pippin's playful spirit often leads him to new discoveries.</li><li>Every roll is an adventure, a joyous bounce through his charming world.</li></ul></div>
+    <div class="slide"><h1>A Misty Bamboo Forest Morning</h1><ul><li>The forest awakens draped in a soft, ethereal mist.</li><li>Sunlight filters through towering bamboo, creating a dappled wonderland.</li><li>Birds begin their morning chorus, a cheerful serenade to the rising sun.</li><li>Pippin stirs, ready for another day of exploration and playful tumbles.</li><li>The air is fresh and sweet, hinting at new wonders to unfold.</li></ul></div>
+    <div class="slide"><h1>The Tiny Blue Butterfly</h1><ul><li>A flash of vibrant sapphire, a tiny blue butterfly flutters through the morning light.</li><li>Oh dear! It finds itself in a tangle, caught in the gentle clutches of a thorny bush.</li><li>Its delicate wings are unable to break free, a tiny struggle in the vast forest.</li><li>Its iridescent beauty shines even in its predicament, a miniature gem.</li><li>A hopeful flutter, a quiet wish for help to come its way.</li></ul></div>
+    <div class="slide"><h1>A Gentle Rescue</h1><ul><li>Pippin, with his keen eyes and gentle heart, spots the little butterfly's plight.</li><li>Carefully, with his soft, padded paws, he approaches the thorny tangle.</li><li>With the utmost tenderness, he nudges and untangles the delicate wings.</li><li>The tiny blue butterfly is freed, wiggling its antennae in grateful relief.</li><li>No reward sought, just the pure joy of helping a friend in need.</li></ul></div>     
+    <div class="slide"><h1>An Unlikely Friendship Begins</h1><ul><li>The newly freed butterfly twirls and dances around Pippin, a joyful thank you.</li><li>It's a silent conversation, a spark of connection between two different souls.</li><li>From that moment on, the little blue butterfly becomes Pippin's faithful companion.</li><li>An unexpected bond forged in a moment of kindness and gratitude.</li><li>Their journey together, a testament to friendship blossoming in the most whimsical ways.</li></ul></div>
+    <div class="slide"><h1>Adventures of Pippin and His Butterfly</h1><ul><li>Together, they explore every nook and cranny of the enchanting bamboo forest.</li><li>Pippin munches happily on bamboo shoots, sharing his peaceful moments.</li><li>The little blue butterfly dances above him, a living, sparkling halo.</li><li>Every day is a new adventure, filled with shared giggles and discoveries.</li><li>Their unique friendship proves that even the smallest creatures can bring the biggest joy.</li></ul></div>
+
+    <div id="prevButton" class="nav-arrow hidden">◄</div>
+    <div id="nextButton" class="nav-arrow">▶</div>
+  </div>
+
+<script>
+  let slideIndex = 0;
+  const slides = document.querySelectorAll('.slide');
+  const prevButton = document.getElementById('prevButton');
+  const nextButton = document.getElementById('nextButton');
+
+  function showSlide(n) {
+    slides.forEach(slide => slide.style.display = 'none');
+    slides[n].style.display = 'block';
+    prevButton.classList.toggle('hidden', n === 0);
+    nextButton.classList.toggle('hidden', n === slides.length - 1);
+  }
+
+  function nextSlide() {
+    if (slideIndex < slides.length - 1) {
+      slideIndex++;
+      showSlide(slideIndex);
+    }
+  }
+
+  function prevSlide() {
+    if (slideIndex > 0) {
+      slideIndex--;
+      showSlide(slideIndex);
+    }
+  }
+
+  nextButton.addEventListener('click', nextSlide);
+  prevButton.addEventListener('click', prevSlide);
+
+  // Keyboard navigation
+  document.addEventListener('keydown', function(event) {
+    if (event.key === 'ArrowRight') {
+      nextSlide();
+    } else if (event.key === 'ArrowLeft') {
+      prevSlide();
+    }
+  });
+
+  showSlide(slideIndex);
+</script>
+
+</body>
+</html>
